@@ -45,12 +45,19 @@ jobs:
       - name: Run Smoke Tests
         run: python -m behave --no-capture --tags=@smoke
 
-      - name: Upload failure screenshots
-        if: failure()
+      - name: Collect results
+        if: always()
+        run: python collect_results.py smoke
+
+      - name: Upload test reports
+        if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: smoke-screenshots
-          path: reports/screenshots/
+          name: smoke-reports
+          path: |
+            reports/screenshots/
+            reports/run_history.json
+            reports/dashboard.html
 
   # Sanity tests run on pushes to main
   sanity:
@@ -75,12 +82,19 @@ jobs:
       - name: Run Sanity Tests
         run: python -m behave --no-capture --tags=@sanity
 
-      - name: Upload failure screenshots
-        if: failure()
+      - name: Collect results
+        if: always()
+        run: python collect_results.py sanity
+
+      - name: Upload test reports
+        if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: sanity-screenshots
-          path: reports/screenshots/
+          name: sanity-reports
+          path: |
+            reports/screenshots/
+            reports/run_history.json
+            reports/dashboard.html
 
   # Full regression runs nightly or on manual dispatch
   regression:
@@ -152,12 +166,19 @@ jobs:
       - name: Run Accessibility Tests
         run: python -m behave --no-capture features/accessibility.feature
 
-      - name: Upload failure screenshots
-        if: failure()
+      - name: Collect results
+        if: always()
+        run: python collect_results.py accessibility
+
+      - name: Upload test reports
+        if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: a11y-screenshots
-          path: reports/screenshots/
+          name: a11y-reports
+          path: |
+            reports/screenshots/
+            reports/run_history.json
+            reports/dashboard.html
 
   # Performance tests on manual dispatch
   performance:
@@ -181,9 +202,16 @@ jobs:
       - name: Run Performance Tests
         run: python -m behave --no-capture features/performance.feature
 
-      - name: Upload failure screenshots
-        if: failure()
+      - name: Collect results
+        if: always()
+        run: python collect_results.py performance
+
+      - name: Upload test reports
+        if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: perf-screenshots
-          path: reports/screenshots/
+          name: perf-reports
+          path: |
+            reports/screenshots/
+            reports/run_history.json
+            reports/dashboard.html
