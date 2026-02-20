@@ -34,12 +34,14 @@ class HomePage(BasePage):
         "Twitter": 'a[href*="twitter.com/"], a[href*="x.com/"]',
         "GitHub": 'a[href*="github.com/"]',
         "LinkedIn": 'a[href*="linkedin.com/in/"]',
+        "Email": 'a[href^="mailto:"]',
     }
 
     SOCIAL_URLS: ClassVar[dict[str, str]] = {
         "Twitter": "twitter.com/expertfrogger",
         "GitHub": "github.com/JustAnotherDevFromLA",
         "LinkedIn": "linkedin.com/in/artashes-kocharyan",
+        "Email": "mailto:",
     }
 
     # ── Hero Section ────────────────────────────────────────────────────
@@ -58,9 +60,11 @@ class HomePage(BasePage):
     PORTFOLIO_ITEMS: str = "#portfolio article"
     PORTFOLIO_ITEM_TITLES: str = "#portfolio article h3"
     PORTFOLIO_ITEM_LINKS: str = "#portfolio article a"
+    PORTFOLIO_ITEM_IMAGES: str = "#portfolio article img"
 
     # ── Resume ──────────────────────────────────────────────────────────
     PDF_VIEWER: str = "#resume iframe, #resume embed, #resume object, #resume .pdf-viewer"
+    RESUME_IFRAME: str = "#resume iframe"
     RESUME_DOWNLOAD_LINK: str = '#resume a[href$=".pdf"]'
 
     # ── Footer ──────────────────────────────────────────────────────────
@@ -138,6 +142,14 @@ class HomePage(BasePage):
         article = self.page.locator(self.PORTFOLIO_ITEMS).filter(has_text=title).first
         return article.locator("a").first.get_attribute("href")
 
+    def verify_portfolio_item_images(self) -> None:
+        """Assert every portfolio item has a visible image with non-zero dimensions."""
+        images = self.page.locator(self.PORTFOLIO_ITEM_IMAGES)
+        count = images.count()
+        assert count > 0, "No portfolio item images found"
+        for i in range(count):
+            expect(images.nth(i)).to_be_visible()
+
     # ── Resume ──────────────────────────────────────────────────────────
 
     def verify_pdf_viewer_visible(self) -> None:
@@ -150,6 +162,13 @@ class HomePage(BasePage):
         expect(locator).to_be_visible()
         href = locator.get_attribute("href")
         assert href and ".pdf" in href, f"Expected resume link to point to a PDF, got '{href}'"
+
+    def verify_resume_iframe_src(self) -> None:
+        """Assert the resume iframe's src attribute points to a PDF file."""
+        locator = self.page.locator(self.RESUME_IFRAME).first
+        expect(locator).to_be_visible()
+        src = locator.get_attribute("src")
+        assert src and ".pdf" in src, f"Expected resume iframe to load a PDF, got '{src}'"
 
     # ── Footer ──────────────────────────────────────────────────────────
 

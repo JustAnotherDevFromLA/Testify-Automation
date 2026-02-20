@@ -15,3 +15,9 @@ def step_verify_portfolio_item(context, title):
 def step_verify_portfolio_github_link(context, title):
     href = context.home_page.get_portfolio_item_link(title)
     assert "github.com" in href, f"Expected '{title}' to link to GitHub, got '{href}'"
+
+
+@then('each portfolio item should have a visible image')
+def step_verify_portfolio_images(context):
+    context.home_page.verify_portfolio_item_images()
+

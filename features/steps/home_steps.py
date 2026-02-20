@@ -1,4 +1,5 @@
 from behave import given, then, when
+from playwright.sync_api import expect
 
 
 @given('the user navigates to the home page')
@@ -81,3 +82,28 @@ def step_verify_meta_tag(context, name):
 def step_verify_og_meta_tag(context, name):
     context.home_page.verify_meta_tag(name, attr="property")
 
+
+# --- Smooth scroll (TC-020) ---
+
+@then('the "{heading_text}" heading should be in the viewport')
+def step_verify_heading_in_viewport(context, heading_text):
+    heading = context.home_page.HEADINGS.get(heading_text)
+    assert heading, f"No heading mapping for '{heading_text}'"
+    expect(context.page.locator(heading)).to_be_in_viewport()
+
+
+# --- Email mailto link (TC-021) ---
+
+@then('the {platform} link should be a mailto link')
+def step_verify_mailto_link(context, platform):
+    selector = context.home_page.SOCIAL_LINKS.get(platform)
+    assert selector, f"No selector for '{platform}'"
+    href = context.page.locator(selector).first.get_attribute("href")
+    assert href and href.startswith("mailto:"), f"Expected mailto link, got '{href}'"
+
+
+# --- Resume iframe (TC-022) ---
+
+@then('the resume iframe should point to a PDF file')
+def step_verify_resume_iframe(context):
+    context.home_page.verify_resume_iframe_src()

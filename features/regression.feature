@@ -89,6 +89,9 @@ Feature: Regression Suite for artasheskocharyan.com
     And the portfolio item "Twitter Bot" should be visible
     And the portfolio item "Process Scheduler Simulator" should be visible
     And the portfolio item "BlackJack Game App" should be visible
+    And the portfolio item "Cryoto Currency Platform" should be visible
+    And the portfolio item "Ticket Managment Browser Extension" should be visible
+    And the portfolio item "Grocery Delivery Web App" should be visible
 
   @portfolio
   Scenario Outline: TC-012 - Portfolio item "<Project>" links to GitHub
@@ -101,6 +104,8 @@ Feature: Regression Suite for artasheskocharyan.com
       | Process Scheduler Simulator          |
       | Grocery Delivery Web App             |
       | BlackJack Game App                   |
+      | Cryoto Currency Platform             |
+      | Ticket Managment Browser Extension   |
 
   @ui
   Scenario: TC-013 - Resume download link is present
@@ -144,3 +149,22 @@ Feature: Regression Suite for artasheskocharyan.com
     And the user clicks the Send Message button
     Then the email field should show a format validation error
 
+  @portfolio
+  Scenario: TC-019 - Portfolio items have thumbnail images
+    When the user clicks on the "Portfolio" link
+    Then each portfolio item should have a visible image
+
+  @navigation @ui
+  Scenario: TC-020 - Navigation scrolls section into viewport
+    When the user clicks on the "About Me" link
+    Then the "About Me" heading should be in the viewport
+
+  @links
+  Scenario: TC-021 - Email mailto link is present in sidebar
+    Then the Email link should be visible
+    And the Email link should be a mailto link
+
+  @ui
+  Scenario: TC-022 - Resume PDF iframe has valid source
+    When the user clicks on the "Resume" link
+    Then the resume iframe should point to a PDF file
