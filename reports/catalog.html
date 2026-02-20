@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Catalog | Testify Automation</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: #0a0e1a;
+            color: #e0e0e0;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Ambient glow */
+        body::before {
+            content: '';
+            position: fixed;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(ellipse at 20% 50%, rgba(99, 102, 241, 0.06) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 20%, rgba(16, 185, 129, 0.05) 0%, transparent 50%);
+            z-index: -1;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+
+        /* Header */
+        .header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .header-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+        }
+
+        .header h1 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .header h1 span {
+            color: #818cf8;
+            font-weight: 400;
+        }
+
+        .nav-links {
+            margin-left: auto;
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        .nav-links a {
+            padding: 0.4rem 1rem;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.06);
+            color: #a5b4fc;
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        .nav-links a:hover {
+            background: rgba(99, 102, 241, 0.2);
+            color: #fff;
+        }
+
+        /* Summary cards */
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 14px;
+            padding: 1.2rem 1.4rem;
+            transition: border-color 0.3s;
+        }
+
+        .stat-card:hover {
+            border-color: rgba(99, 102, 241, 0.3);
+        }
+
+        .stat-card .label {
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: #6b7280;
+            margin-bottom: 0.4rem;
+        }
+
+        .stat-card .value {
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+
+        .stat-card .sub {
+            font-size: 0.78rem;
+            color: #6b7280;
+            margin-top: 0.2rem;
+        }
+
+        /* Suite pills */
+        .suites-section {
+            margin-bottom: 2rem;
+        }
+
+        .suites-section h2 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .suite-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .suite-pill {
+            padding: 0.5rem 1.2rem;
+            border-radius: 10px;
+            font-size: 0.82rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.25s;
+            border: 1px solid transparent;
+            position: relative;
+        }
+
+        .suite-pill .count {
+            display: inline-block;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 0.1rem 0.5rem;
+            border-radius: 20px;
+            font-size: 0.72rem;
+            margin-left: 0.4rem;
+        }
+
+        .suite-pill.active {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(99, 102, 241, 0.2);
+        }
+
+        .suite-smoke {
+            background: rgba(245, 158, 11, 0.15);
+            color: #fbbf24;
+            border-color: rgba(245, 158, 11, 0.3);
+        }
+
+        .suite-smoke.active {
+            background: rgba(245, 158, 11, 0.3);
+        }
+
+        .suite-sanity {
+            background: rgba(59, 130, 246, 0.15);
+            color: #60a5fa;
+            border-color: rgba(59, 130, 246, 0.3);
+        }
+
+        .suite-sanity.active {
+            background: rgba(59, 130, 246, 0.3);
+        }
+
+        .suite-regression {
+            background: rgba(16, 185, 129, 0.15);
+            color: #34d399;
+            border-color: rgba(16, 185, 129, 0.3);
+        }
+
+        .suite-regression.active {
+            background: rgba(16, 185, 129, 0.3);
+        }
+
+        .suite-accessibility {
+            background: rgba(168, 85, 247, 0.15);
+            color: #c084fc;
+            border-color: rgba(168, 85, 247, 0.3);
+        }
+
+        .suite-accessibility.active {
+            background: rgba(168, 85, 247, 0.3);
+        }
+
+        .suite-performance {
+            background: rgba(236, 72, 153, 0.15);
+            color: #f472b6;
+            border-color: rgba(236, 72, 153, 0.3);
+        }
+
+        .suite-performance.active {
+            background: rgba(236, 72, 153, 0.3);
+        }
+
+        .suite-all {
+            background: rgba(255, 255, 255, 0.08);
+            color: #e0e0e0;
+            border-color: rgba(255, 255, 255, 0.15);
+        }
+
+        .suite-all.active {
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        /* Search */
+        .search-bar {
+            margin-bottom: 1.5rem;
+        }
+
+        .search-bar input {
+            width: 100%;
+            padding: 0.8rem 1.2rem;
+            padding-left: 2.8rem;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.04);
+            color: #fff;
+            font-size: 0.9rem;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        .search-bar input:focus {
+            border-color: rgba(99, 102, 241, 0.5);
+        }
+
+        .search-bar input::placeholder {
+            color: #4b5563;
+        }
+
+        .search-wrapper {
+            position: relative;
+        }
+
+        .search-wrapper::before {
+            content: '🔍';
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 0.9rem;
+        }
+
+        /* Feature sections */
+        .feature-section {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            border-radius: 16px;
+            margin-bottom: 1.2rem;
+            overflow: hidden;
+        }
+
+        .feature-header {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            padding: 1rem 1.4rem;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .feature-header:hover {
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .feature-icon {
+            font-size: 1.1rem;
+        }
+
+        .feature-name {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: #fff;
+            flex: 1;
+        }
+
+        .feature-badge {
+            background: rgba(99, 102, 241, 0.15);
+            color: #a5b4fc;
+            padding: 0.2rem 0.7rem;
+            border-radius: 20px;
+            font-size: 0.72rem;
+            font-weight: 600;
+        }
+
+        .feature-chevron {
+            color: #4b5563;
+            transition: transform 0.3s;
+            font-size: 0.8rem;
+        }
+
+        .feature-section.open .feature-chevron {
+            transform: rotate(90deg);
+        }
+
+        /* Test case rows */
+        .test-list {
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease;
+        }
+
+        .feature-section.open .test-list {
+            max-height: 2000px;
+        }
+
+        .test-case {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            padding: 0.9rem 1.4rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+            transition: background 0.2s;
+        }
+
+        .test-case:hover {
+            background: rgba(99, 102, 241, 0.04);
+        }
+
+        .test-case:last-child {
+            border-bottom: none;
+        }
+
+        .tc-id {
+            font-size: 0.78rem;
+            font-weight: 700;
+            color: #818cf8;
+            min-width: 60px;
+            font-family: 'SF Mono', 'Fira Code', monospace;
+        }
+
+        .tc-content {
+            flex: 1;
+        }
+
+        .tc-name {
+            font-size: 0.88rem;
+            font-weight: 500;
+            color: #e0e0e0;
+            margin-bottom: 0.3rem;
+        }
+
+        .tc-name .outline-badge {
+            font-size: 0.65rem;
+            background: rgba(245, 158, 11, 0.15);
+            color: #fbbf24;
+            padding: 0.1rem 0.4rem;
+            border-radius: 4px;
+            margin-left: 0.4rem;
+            font-weight: 600;
+        }
+
+        .tc-steps {
+            font-size: 0.75rem;
+            color: #4b5563;
+            line-height: 1.5;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s;
+        }
+
+        .test-case.expanded .tc-steps {
+            max-height: 500px;
+        }
+
+        .tc-steps .step {
+            padding: 0.1rem 0;
+        }
+
+        .tc-steps .keyword {
+            color: #6366f1;
+            font-weight: 600;
+        }
+
+        .tc-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.3rem;
+        }
+
+        .tag {
+            font-size: 0.68rem;
+            padding: 0.15rem 0.5rem;
+            border-radius: 6px;
+            font-weight: 600;
+        }
+
+        .tag-smoke {
+            background: rgba(245, 158, 11, 0.12);
+            color: #fbbf24;
+        }
+
+        .tag-sanity {
+            background: rgba(59, 130, 246, 0.12);
+            color: #60a5fa;
+        }
+
+        .tag-regression {
+            background: rgba(16, 185, 129, 0.12);
+            color: #34d399;
+        }
+
+        .tag-a11y,
+        .tag-accessibility {
+            background: rgba(168, 85, 247, 0.12);
+            color: #c084fc;
+        }
+
+        .tag-perf,
+        .tag-performance {
+            background: rgba(236, 72, 153, 0.12);
+            color: #f472b6;
+        }
+
+        .tag-default {
+            background: rgba(255, 255, 255, 0.06);
+            color: #9ca3af;
+        }
+
+        /* Expand toggle */
+        .tc-expand {
+            color: #4b5563;
+            cursor: pointer;
+            font-size: 0.75rem;
+            padding: 0.2rem;
+            transition: color 0.2s;
+        }
+
+        .tc-expand:hover {
+            color: #818cf8;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* Empty state */
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            color: #4b5563;
+        }
+
+        .empty-state .icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 2rem 0;
+            font-size: 0.75rem;
+            color: #374151;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="header-icon">📋</div>
+            <h1>Test Catalog <span>— Testify Automation</span></h1>
+            <div class="nav-links">
+                <a href="dashboard.html">📊 Dashboard</a>
+            </div>
+        </div>
+
+        <!-- Stats -->
+        <div class="stats" id="stats"></div>
+
+        <!-- Suite Filter -->
+        <div class="suites-section">
+            <h2>🏷️ Filter by Suite</h2>
+            <div class="suite-grid" id="suite-filters"></div>
+        </div>
+
+        <!-- Search -->
+        <div class="search-bar">
+            <div class="search-wrapper">
+                <input type="text" id="search" placeholder="Search test cases by ID, name, or tag..." />
+            </div>
+        </div>
+
+        <!-- Feature Groups -->
+        <div id="features"></div>
+
+        <!-- Empty -->
+        <div id="empty-state" class="empty-state hidden">
+            <div class="icon">🔍</div>
+            <p>No test cases match your filters</p>
+        </div>
+
+        <div class="footer">Auto-generated from .feature files</div>
+    </div>
+
+    <script>
+        // Data is injected here by generate_catalog.py
+        // DO NOT EDIT THIS LINE — it is auto-replaced
+        window.__CATALOG__ = {"generated_at": "2026-02-20T11:33:50.699416", "total_features": 3, "total_scenarios": 26, "total_with_examples": 36, "all_tags": ["@a11y", "@accessibility", "@contact", "@content", "@links", "@navigation", "@perf", "@performance", "@portfolio", "@regression", "@responsive", "@sanity", "@seo", "@smoke", "@ui", "@validation"], "suites": {"smoke": {"count": 3, "tests": ["TC-001", "TC-005", "TC-006"]}, "sanity": {"count": 9, "tests": ["TC-001", "TC-002", "TC-003", "TC-004", "TC-005", "TC-006", "TC-009", "TC-014", "TC-017"]}, "regression": {"count": 18, "tests": ["TC-001", "TC-002", "TC-003", "TC-004", "TC-005", "TC-006", "TC-007", "TC-008", "TC-009", "TC-010", "TC-011", "TC-012", "TC-013", "TC-014", "TC-015", "TC-016", "TC-017", "TC-018"]}, "accessibility": {"count": 5, "tests": ["TC-A01", "TC-A02", "TC-A03", "TC-A04", "TC-A05"]}, "performance": {"count": 3, "tests": ["TC-P01", "TC-P02", "TC-P03"]}}, "features": [{"feature": "Accessibility Suite for artasheskocharyan.com", "file": "accessibility.feature", "tags": ["@accessibility"], "scenarios": [{"tc_id": "TC-A01", "name": "All images have alt text", "tags": ["@a11y", "@accessibility"], "steps": ["Then every image on the page should have alt text"], "is_outline": false, "example_count": 0, "feature": "Accessibility Suite for artasheskocharyan.com", "file": "accessibility.feature"}, {"tc_id": "TC-A02", "name": "Heading hierarchy is correct", "tags": ["@a11y", "@accessibility"], "steps": ["Then there should be exactly 1 h1 element", "And headings should follow a logical order"], "is_outline": false, "example_count": 0, "feature": "Accessibility Suite for artasheskocharyan.com", "file": "accessibility.feature"}, {"tc_id": "TC-A03", "name": "Page has a lang attribute", "tags": ["@a11y", "@accessibility"], "steps": ["Then the html element should have a lang attribute"], "is_outline": false, "example_count": 0, "feature": "Accessibility Suite for artasheskocharyan.com", "file": "accessibility.feature"}, {"tc_id": "TC-A04", "name": "Interactive elements are keyboard accessible", "tags": ["@a11y", "@accessibility"], "steps": ["Then all links should have non-empty href attributes", "And the submit button should be focusable"], "is_outline": false, "example_count": 0, "feature": "Accessibility Suite for artasheskocharyan.com", "file": "accessibility.feature"}, {"tc_id": "TC-A05", "name": "Color contrast and text readability", "tags": ["@a11y", "@accessibility"], "steps": ["Then the body text should have a minimum font size of 12px"], "is_outline": false, "example_count": 0, "feature": "Accessibility Suite for artasheskocharyan.com", "file": "accessibility.feature"}]}, {"feature": "Performance Suite for artasheskocharyan.com", "file": "performance.feature", "tags": ["@performance"], "scenarios": [{"tc_id": "TC-P01", "name": "Page loads within acceptable time", "tags": ["@perf", "@performance"], "steps": ["When the user measures the page load time", "Then the page should load in less than 5 seconds"], "is_outline": false, "example_count": 0, "feature": "Performance Suite for artasheskocharyan.com", "file": "performance.feature"}, {"tc_id": "TC-P02", "name": "No broken images on the page", "tags": ["@perf", "@performance"], "steps": ["Given the user navigates to the home page", "Then all images should load successfully"], "is_outline": false, "example_count": 0, "feature": "Performance Suite for artasheskocharyan.com", "file": "performance.feature"}, {"tc_id": "TC-P03", "name": "Page size is reasonable", "tags": ["@perf", "@performance"], "steps": ["Given the user navigates to the home page", "Then the total DOM element count should be less than 1500"], "is_outline": false, "example_count": 0, "feature": "Performance Suite for artasheskocharyan.com", "file": "performance.feature"}]}, {"feature": "Regression Suite for artasheskocharyan.com", "file": "regression.feature", "tags": ["@regression"], "scenarios": [{"tc_id": "TC-001", "name": "Page Title verification", "tags": ["@regression", "@sanity", "@smoke"], "steps": ["Then the page title should be \"Artashes Kocharyan | Software Quality Assurance Engineer\""], "is_outline": false, "example_count": 0, "feature": "Regression Suite for artasheskocharyan.com", "file": "regression.feature"}, {"tc_id": "TC-002", "name": "Navigation to <Section> works", "tags": ["@navigation", "@regression", "@sanity"], "steps": ["When the user clicks on the \"<Section>\" link", "Then the \"<Section>\" heading should be visible"], "is_outline": true, "example_count": 4, "feature": "Regression Suite for artasheskocharyan.com", "file": "regression.feature"}, {"tc_id": "TC-003", "name": "<Platform> social link is correct", "tags": ["@links", "@regression", "@sanity"], "steps": ["Then the <Platform> link should be visible"], "is_outline": true, "example_count": 3, "feature": "Regression Suite for artasheskocharyan.com", "file": "regression.feature"}, {"tc_id": "TC-004", "name": "Key content is present in Resume section", "tags": ["@regression", "@sanity", "@ui"], "steps": ["When the user clicks on the \"Resume\" link", "Then the PDF viewer should be visible"], "is_outline": false, "example_count": 0, "feature": "Regression Suite for artasheskocharyan.com", "file": "regression.feature"}, {"tc_id": "TC-005", "name": "Hero section CTA works", "tags": ["@regression", "@sanity", "@smoke", "@ui"], "steps": ["When the user clicks the Portfolio button in the hero section", "Then the portfolio section should be in the viewport"], "is_outline": false, "example_count": 0, "feature": "Regression Suite for artasheskocharyan.com", "file": "regression.feature"}, {"tc_id": "TC-006", "name": "Contact form fields are present", "tags": ["@contact", "@regression", "@sanity", "@smoke"], "steps": ["When the user navigates to the contact section", "Then the contact form should be visible", "And the \"Full Name\" field should be visible", "And the \"Email Address\" field should be visible", "And the \"Subject\" field should be visible", "And the \"Phone Number\" field should be visible", "And the \"Message\" field should be visible", "And the Send Message button should be visible"], "is_outline": false, "example_count": 0, "feature": "Regression Suite for artasheskocharyan.com", "file": "regression.feature"}, {"tc_id": "TC-007", "name": "User can fill out the contact form", "tags": ["@contact", "@regression"], "steps": ["When the user navigates to the contact section", "And the user fills in the contact form with:", "| Field         | Value                   |", "| Full Name     | Jane Doe                |", "| Email Address | jane@example.com        |", "| Subject       | Test Inquiry            |", "| Phone Number  | 1234567890              |", "| Message       | This is a test message. |", "Then all contact form fields should retain their values"], "is_outline": false, "example_count": 0, "feature": "Regression Suite for artasheskocharyan.com", "file": "regression.feature"}, {"tc_id": "TC-008", "name": "Required fields enforce validation", "tags": ["@contact", "@regression", "@validation"], "steps": ["When the user navigates to the contact section", "And the user clicks the Send Message button", "Then the browser should show validation on the \"Full Name\" field"], "is_outline": false, "example_count": 0, "feature": "Regression Suite for artasheskocharyan.com", "file": "regression.feature"}, {"tc_id": "TC-009", "name": "Hero section content is displayed", "tags": ["@regression", "@sanity", "@ui"], "steps": ["Then the profile image should be visible", "And the sidebar should display the name \"Artashes Kocharyan\"", "And the hero tagline should be visible"], "is_outline": false, "example_count": 0, "feature": "Regression Suite for artasheskocharyan.com", "file": "regression.feature"}, {"tc_id": "TC-010", "name": "About Me section has key content", "tags": ["@content", "@regression"], "steps": ["When the user clicks on the \"About Me\" link", "Then the about section should contain \"Los Angeles\"", "And the about section should contain \"Computer Science\"", "And the about section should contain \"Quality Assurance\""], "is_outline": false, "example_count": 0, "feature": "Regression Suite for artasheskocharyan.com", "file": "regression.feature"}, {"tc_id": "TC-011", "name": "All portfolio items are displayed", "tags": ["@portfolio", "@regression"], "steps": ["When the user clicks on the \"Portfolio\" link", "Then there should be 6 portfolio items", "And the portfolio item \"Twitter Bot\" should be visible", "And the portfolio item \"Process Scheduler Simulator\" should be visible", "And the portfolio item \"BlackJack Game App\" should be visible"], "is_outline": false, "example_count": 0, "feature": "Regression Suite for artasheskocharyan.com", "file": "regression.feature"}, {"tc_id": "TC-012", "name": "Portfolio item \"<Project>\" links to GitHub", "tags": ["@portfolio", "@regression"], "steps": ["When the user clicks on the \"Portfolio\" link", "Then the portfolio item \"<Project>\" should link to GitHub"], "is_outline": true, "example_count": 4, "feature": "Regression Suite for artasheskocharyan.com", "file": "regression.feature"}, {"tc_id": "TC-013", "name": "Resume download link is present", "tags": ["@regression", "@ui"], "steps": ["When the user clicks on the \"Resume\" link", "Then the resume download link should point to a PDF"], "is_outline": false, "example_count": 0, "feature": "Regression Suite for artasheskocharyan.com", "file": "regression.feature"}, {"tc_id": "TC-014", "name": "Footer displays copyright", "tags": ["@regression", "@sanity", "@ui"], "steps": ["Then the footer should contain \"Artashes Alex Kocharyan\""], "is_outline": false, "example_count": 0, "feature": "Regression Suite for artasheskocharyan.com", "file": "regression.feature"}, {"tc_id": "TC-015", "name": "<Platform> links to the correct profile", "tags": ["@links", "@regression"], "steps": ["Then the <Platform> link should point to the correct URL"], "is_outline": true, "example_count": 3, "feature": "Regression Suite for artasheskocharyan.com", "file": "regression.feature"}, {"tc_id": "TC-016", "name": "Mobile layout hides sidebar and shows content", "tags": ["@regression", "@responsive"], "steps": ["Given the user navigates to the home page in mobile view", "Then the sidebar should be hidden", "And the hero tagline should be visible", "And the \"About Me\" heading should be visible"], "is_outline": false, "example_count": 0, "feature": "Regression Suite for artasheskocharyan.com", "file": "regression.feature"}, {"tc_id": "TC-017", "name": "Page meta tags are present", "tags": ["@regression", "@sanity", "@seo"], "steps": ["Then the meta tag \"description\" should be present", "And the meta tag \"viewport\" should be present", "And the og meta tag \"og:title\" should be present"], "is_outline": false, "example_count": 0, "feature": "Regression Suite for artasheskocharyan.com", "file": "regression.feature"}, {"tc_id": "TC-018", "name": "Email field rejects invalid format", "tags": ["@contact", "@regression", "@validation"], "steps": ["When the user navigates to the contact section", "And the user fills in the \"Full Name\" field with \"Jane Doe\"", "And the user fills in the \"Email Address\" field with \"not-an-email\"", "And the user fills in the \"Subject\" field with \"Test\"", "And the user fills in the \"Message\" field with \"Testing email validation\"", "And the user clicks the Send Message button", "Then the email field should show a format validation error"], "is_outline": false, "example_count": 0, "feature": "Regression Suite for artasheskocharyan.com", "file": "regression.feature"}]}]};
+    </script>
+    <script>
+        const FEATURE_ICONS = {
+            'regression': '🧪',
+            'accessibility': '♿',
+            'performance': '⚡'
+        };
+
+        const TAG_COLORS = {
+            'smoke': 'tag-smoke', 'sanity': 'tag-sanity', 'regression': 'tag-regression',
+            'a11y': 'tag-a11y', 'accessibility': 'tag-accessibility',
+            'perf': 'tag-perf', 'performance': 'tag-performance'
+        };
+
+        let activeSuite = 'all';
+        let searchQuery = '';
+
+        function init() {
+            const data = window.__CATALOG__;
+            if (!data) {
+                document.getElementById('empty-state').classList.remove('hidden');
+                document.querySelector('.empty-state p').textContent = 'No catalog data. Run: python generate_catalog.py';
+                return;
+            }
+            renderStats(data);
+            renderSuiteFilters(data);
+            renderFeatures(data);
+
+            document.getElementById('search').addEventListener('input', (e) => {
+                searchQuery = e.target.value.toLowerCase();
+                applyFilters(data);
+            });
+        }
+
+        function renderStats(data) {
+            const container = document.getElementById('stats');
+            const suiteNames = Object.keys(data.suites).filter(s => data.suites[s].count > 0);
+            container.innerHTML = `
+                <div class="stat-card">
+                    <div class="label">Total Features</div>
+                    <div class="value">${data.total_features}</div>
+                    <div class="sub">.feature files</div>
+                </div>
+                <div class="stat-card">
+                    <div class="label">Test Cases</div>
+                    <div class="value">${data.total_scenarios}</div>
+                    <div class="sub">${data.total_with_examples} with examples expanded</div>
+                </div>
+                <div class="stat-card">
+                    <div class="label">Suites</div>
+                    <div class="value">${suiteNames.length}</div>
+                    <div class="sub">${suiteNames.join(', ')}</div>
+                </div>
+                <div class="stat-card">
+                    <div class="label">Tags</div>
+                    <div class="value">${data.all_tags.length}</div>
+                    <div class="sub">${data.all_tags.map(t => t).join(' ')}</div>
+                </div>
+            `;
+        }
+
+        function renderSuiteFilters(data) {
+            const container = document.getElementById('suite-filters');
+            const total = data.total_scenarios;
+            let html = `<div class="suite-pill suite-all active" onclick="filterSuite('all', this)" data-suite="all">
+                All<span class="count">${total}</span>
+            </div>`;
+            for (const [name, info] of Object.entries(data.suites)) {
+                if (info.count === 0) continue;
+                html += `<div class="suite-pill suite-${name}" onclick="filterSuite('${name}', this)" data-suite="${name}">
+                    ${name.charAt(0).toUpperCase() + name.slice(1)}<span class="count">${info.count}</span>
+                </div>`;
+            }
+            container.innerHTML = html;
+        }
+
+        function filterSuite(suite, el) {
+            activeSuite = suite;
+            document.querySelectorAll('.suite-pill').forEach(p => p.classList.remove('active'));
+            el.classList.add('active');
+            applyFilters(window.__CATALOG__);
+        }
+
+        function applyFilters(data) {
+            const suiteTests = activeSuite === 'all' ? null : new Set(data.suites[activeSuite]?.tests || []);
+
+            let visibleCount = 0;
+            document.querySelectorAll('.feature-section').forEach(section => {
+                const featureFile = section.dataset.file;
+                let featureVisible = false;
+
+                section.querySelectorAll('.test-case').forEach(tc => {
+                    const tcId = tc.dataset.tcid;
+                    const tcName = tc.dataset.name;
+                    const tcTags = tc.dataset.tags;
+
+                    const matchesSuite = !suiteTests || suiteTests.has(tcId);
+                    const matchesSearch = !searchQuery ||
+                        tcId.toLowerCase().includes(searchQuery) ||
+                        tcName.toLowerCase().includes(searchQuery) ||
+                        tcTags.toLowerCase().includes(searchQuery);
+
+                    const visible = matchesSuite && matchesSearch;
+                    tc.classList.toggle('hidden', !visible);
+                    if (visible) {
+                        featureVisible = true;
+                        visibleCount++;
+                    }
+                });
+
+                section.classList.toggle('hidden', !featureVisible);
+                if (featureVisible) section.classList.add('open');
+            });
+
+            document.getElementById('empty-state').classList.toggle('hidden', visibleCount > 0);
+        }
+
+        function renderFeatures(data) {
+            const container = document.getElementById('features');
+            let html = '';
+
+            for (const feature of data.features) {
+                const icon = Object.entries(FEATURE_ICONS).find(
+                    ([k]) => feature.file.includes(k)
+                )?.[1] || '📄';
+
+                html += `<div class="feature-section open" data-file="${feature.file}">
+                    <div class="feature-header" onclick="this.parentElement.classList.toggle('open')">
+                        <span class="feature-icon">${icon}</span>
+                        <span class="feature-name">${feature.feature}</span>
+                        <span class="feature-badge">${feature.scenarios.length} tests</span>
+                        <span class="feature-chevron">▶</span>
+                    </div>
+                    <div class="test-list">`;
+
+                for (const tc of feature.scenarios) {
+                    const tags = tc.tags.map(t => t.replace('@', ''));
+                    const tagHtml = tags.map(t => {
+                        const cls = TAG_COLORS[t] || 'tag-default';
+                        return `<span class="tag ${cls}">@${t}</span>`;
+                    }).join('');
+
+                    const stepsHtml = tc.steps.map(s => {
+                        const match = s.match(/^(Given|When|Then|And|But)\s+(.*)/);
+                        if (match) return `<div class="step"><span class="keyword">${match[1]}</span> ${match[2]}</div>`;
+                        return `<div class="step">${s}</div>`;
+                    }).join('');
+
+                    const outlineBadge = tc.is_outline
+                        ? `<span class="outline-badge">OUTLINE ×${tc.example_count}</span>`
+                        : '';
+
+                    html += `<div class="test-case" data-tcid="${tc.tc_id}" data-name="${tc.name}" data-tags="${tags.join(' ')}"
+                            onclick="this.classList.toggle('expanded')">
+                        <span class="tc-id">${tc.tc_id}</span>
+                        <div class="tc-content">
+                            <div class="tc-name">${tc.name}${outlineBadge}</div>
+                            <div class="tc-steps">${stepsHtml}</div>
+                        </div>
+                        <div class="tc-tags">${tagHtml}</div>
+                    </div>`;
+                }
+
+                html += '</div></div>';
+            }
+
+            container.innerHTML = html;
+        }
+
+        init();
+    </script>
+</body>
+
+</html>

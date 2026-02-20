@@ -1,0 +1,189 @@
+name: Test Suite CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  schedule:
+    # Nightly regression run at 2:00 AM UTC
+    - cron: '0 2 * * *'
+  workflow_dispatch:
+    inputs:
+      suite:
+        description: 'Test suite to run'
+        required: true
+        default: 'regression'
+        type: choice
+        options:
+          - smoke
+          - sanity
+          - regression
+          - accessibility
+          - performance
+
+jobs:
+  # Smoke tests run on every push and PR
+  smoke:
+    if: github.event_name == 'push' || github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          python -m playwright install chromium
+          python -m playwright install-deps
+
+      - name: Run Smoke Tests
+        run: python -m behave --no-capture --tags=@smoke
+
+      - name: Upload failure screenshots
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: smoke-screenshots
+          path: reports/screenshots/
+
+  # Sanity tests run on pushes to main
+  sanity:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    needs: smoke
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          python -m playwright install chromium
+          python -m playwright install-deps
+
+      - name: Run Sanity Tests
+        run: python -m behave --no-capture --tags=@sanity
+
+      - name: Upload failure screenshots
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: sanity-screenshots
+          path: reports/screenshots/
+
+  # Full regression runs nightly or on manual dispatch
+  regression:
+    if: github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && github.event.inputs.suite == 'regression')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          python -m playwright install chromium
+          python -m playwright install-deps
+
+      - name: Install Allure
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y default-jre
+          curl -sL https://github.com/allure-framework/allure2/releases/download/2.27.0/allure-2.27.0.tgz | tar -xz
+          echo "$PWD/allure-2.27.0/bin" >> $GITHUB_PATH
+
+      - name: Run Full Regression
+        run: python -m behave --no-capture
+
+      - name: Collect results
+        if: always()
+        run: python collect_results.py
+
+      - name: Generate Allure report
+        if: always()
+        run: allure generate reports/allure-results --clean -o reports/allure-report
+
+      - name: Upload test reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: regression-reports
+          path: |
+            reports/allure-report/
+            reports/screenshots/
+            reports/run_history.json
+            reports/dashboard.html
+
+  # Accessibility tests on manual dispatch
+  accessibility:
+    if: github.event_name == 'workflow_dispatch' && github.event.inputs.suite == 'accessibility'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          python -m playwright install chromium
+          python -m playwright install-deps
+
+      - name: Run Accessibility Tests
+        run: python -m behave --no-capture features/accessibility.feature
+
+      - name: Upload failure screenshots
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: a11y-screenshots
+          path: reports/screenshots/
+
+  # Performance tests on manual dispatch
+  performance:
+    if: github.event_name == 'workflow_dispatch' && github.event.inputs.suite == 'performance'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          python -m playwright install chromium
+          python -m playwright install-deps
+
+      - name: Run Performance Tests
+        run: python -m behave --no-capture features/performance.feature
+
+      - name: Upload failure screenshots
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: perf-screenshots
+          path: reports/screenshots/

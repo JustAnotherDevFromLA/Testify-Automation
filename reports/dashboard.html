@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Suite Dashboard | Testify Automation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <style>
+        :root {
+            --bg-primary: #0f1117;
+            --bg-secondary: #1a1d27;
+            --bg-card: #222533;
+            --bg-hover: #2a2e3f;
+            --text-primary: #e8eaed;
+            --text-secondary: #9aa0ac;
+            --text-muted: #6b7280;
+            --accent-green: #34d399;
+            --accent-green-bg: rgba(52, 211, 153, 0.1);
+            --accent-red: #f87171;
+            --accent-red-bg: rgba(248, 113, 113, 0.1);
+            --accent-yellow: #fbbf24;
+            --accent-blue: #60a5fa;
+            --accent-blue-bg: rgba(96, 165, 250, 0.12);
+            --accent-purple: #a78bfa;
+            --border: #2d3144;
+            --radius: 12px;
+            --shadow: 0 4px 24px rgba(0, 0, 0, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 32px 24px;
+        }
+
+        /* Header */
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 32px;
+            padding-bottom: 24px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .logo {
+            width: 44px;
+            height: 44px;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .header h1 {
+            font-size: 22px;
+            font-weight: 700;
+            letter-spacing: -0.3px;
+        }
+
+        .header h1 span {
+            color: var(--text-secondary);
+            font-weight: 400;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .badge {
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 0.3px;
+        }
+
+        .badge-green {
+            background: var(--accent-green-bg);
+            color: var(--accent-green);
+        }
+
+        .badge-red {
+            background: var(--accent-red-bg);
+            color: var(--accent-red);
+        }
+
+        .badge-blue {
+            background: var(--accent-blue-bg);
+            color: var(--accent-blue);
+        }
+
+        .refresh-btn {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 13px;
+            font-family: inherit;
+            transition: all 0.2s;
+        }
+
+        .refresh-btn:hover {
+            background: var(--bg-hover);
+            color: var(--text-primary);
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            margin-bottom: 28px;
+        }
+
+        .stat-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 20px 24px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+
+        .stat-label {
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            margin-bottom: 8px;
+        }
+
+        .stat-value {
+            font-size: 32px;
+            font-weight: 700;
+            letter-spacing: -1px;
+        }
+
+        .stat-sub {
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-top: 4px;
+        }
+
+        .stat-green {
+            color: var(--accent-green);
+        }
+
+        .stat-red {
+            color: var(--accent-red);
+        }
+
+        .stat-blue {
+            color: var(--accent-blue);
+        }
+
+        .stat-yellow {
+            color: var(--accent-yellow);
+        }
+
+        /* Charts Row */
+        .charts-row {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 16px;
+            margin-bottom: 28px;
+        }
+
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 24px;
+        }
+
+        .card-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .card-title .icon {
+            font-size: 16px;
+        }
+
+        /* Run History Table */
+        .table-container {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            padding: 12px 16px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+
+        td {
+            padding: 14px 16px;
+            font-size: 13px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        tr:hover td {
+            background: var(--bg-hover);
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 8px;
+        }
+
+        .status-dot.pass {
+            background: var(--accent-green);
+            box-shadow: 0 0 6px var(--accent-green);
+        }
+
+        .status-dot.fail {
+            background: var(--accent-red);
+            box-shadow: 0 0 6px var(--accent-red);
+        }
+
+        .progress-bar {
+            width: 120px;
+            height: 6px;
+            background: var(--bg-primary);
+            border-radius: 3px;
+            overflow: hidden;
+            display: inline-block;
+            vertical-align: middle;
+            margin-right: 8px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            border-radius: 3px;
+            transition: width 0.5s ease;
+        }
+
+        .mono {
+            font-family: 'SF Mono', 'Fira Code', monospace;
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 80px 20px;
+            color: var(--text-muted);
+        }
+
+        .empty-state h2 {
+            font-size: 20px;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+        }
+
+        .empty-state p {
+            font-size: 14px;
+        }
+
+        .empty-state code {
+            display: inline-block;
+            margin-top: 16px;
+            padding: 10px 20px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-family: 'SF Mono', monospace;
+            font-size: 13px;
+            color: var(--accent-blue);
+        }
+
+        @media (max-width: 768px) {
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .charts-row {
+                grid-template-columns: 1fr;
+            }
+
+            .header {
+                flex-direction: column;
+                gap: 16px;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container" id="app">
+        <div class="empty-state" id="empty-state">
+            <h2>No test runs recorded yet</h2>
+            <p>Run your test suite to start tracking results</p>
+            <code>./run_tests.sh</code>
+        </div>
+    </div>
+
+    <script>
+        // Data is injected here by collect_results.py after each run
+        // DO NOT EDIT THIS LINE — it is auto-replaced
+        window.__RUN_DATA__ = [{ "total": 28, "passed": 28, "failed": 0, "broken": 0, "skipped": 0, "pass_rate": 100.0, "duration_s": 32.9, "timestamp": "2026-02-18T22:34:32.212722", "run_id": "20260218_223432", "tags_filter": "" }, { "total": 1, "passed": 1, "failed": 0, "broken": 0, "skipped": 0, "pass_rate": 100.0, "duration_s": 1.0, "timestamp": "2026-02-18T22:34:44.484242", "run_id": "20260218_223444", "tags_filter": "@smoke" }, { "total": 4, "passed": 4, "failed": 0, "broken": 0, "skipped": 0, "pass_rate": 100.0, "duration_s": 4.9, "timestamp": "2026-02-18T22:34:57.879224", "run_id": "20260218_223457", "tags_filter": "@contact" }, { "total": 28, "passed": 28, "failed": 0, "broken": 0, "skipped": 0, "pass_rate": 100.0, "duration_s": 32.8, "timestamp": "2026-02-18T22:37:56.797714", "run_id": "20260218_223756", "tags_filter": "" }, { "total": 28, "passed": 0, "failed": 0, "broken": 28, "skipped": 0, "pass_rate": 0.0, "duration_s": 54.4, "timestamp": "2026-02-19T16:30:31.135484", "run_id": "20260219_163031", "tags_filter": "" }, { "total": 28, "passed": 23, "failed": 0, "broken": 5, "skipped": 0, "pass_rate": 82.1, "duration_s": 62.0, "timestamp": "2026-02-19T16:32:59.022343", "run_id": "20260219_163259", "tags_filter": "" }, { "total": 28, "passed": 18, "failed": 0, "broken": 10, "skipped": 0, "pass_rate": 64.3, "duration_s": 50.2, "timestamp": "2026-02-19T16:39:08.270875", "run_id": "20260219_163908", "tags_filter": "" }, { "total": 28, "passed": 4, "failed": 0, "broken": 24, "skipped": 0, "pass_rate": 14.3, "duration_s": 11.0, "timestamp": "2026-02-19T16:50:36.803591", "run_id": "20260219_165036", "tags_filter": "" }, { "total": 3, "passed": 3, "failed": 0, "broken": 0, "skipped": 0, "pass_rate": 100.0, "duration_s": 2.6, "timestamp": "2026-02-19T16:59:30.098494", "run_id": "20260219_165930", "tags_filter": "@smoke" }, { "total": 5, "passed": 5, "failed": 0, "broken": 0, "skipped": 0, "pass_rate": 100.0, "duration_s": 3.1, "timestamp": "2026-02-19T16:59:43.214484", "run_id": "20260219_165943", "tags_filter": "@a11y" }, { "total": 3, "passed": 3, "failed": 0, "broken": 0, "skipped": 0, "pass_rate": 100.0, "duration_s": 2.3, "timestamp": "2026-02-19T16:59:56.935276", "run_id": "20260219_165956", "tags_filter": "@performance" }, { "total": 36, "passed": 18, "failed": 0, "broken": 18, "skipped": 0, "pass_rate": 50.0, "duration_s": 20.0, "timestamp": "2026-02-19T17:00:30.237962", "run_id": "20260219_170030", "tags_filter": "" }];
+    </script>
+    <script>
+        async function loadData() {
+            let data = window.__RUN_DATA__;
+
+            // Fallback: try fetching if no embedded data
+            if (!data || data.length === 0) {
+                try {
+                    const response = await fetch('run_history.json');
+                    if (response.ok) data = await response.json();
+                } catch (e) { /* ignore */ }
+            }
+
+            if (!data || data.length === 0) return;
+            document.getElementById('empty-state').style.display = 'none';
+            renderDashboard(data);
+        }
+
+        function formatDate(isoStr) {
+            const d = new Date(isoStr);
+            return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) +
+                ' ' + d.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+        }
+
+        function formatDuration(seconds) {
+            if (seconds < 60) return seconds.toFixed(1) + 's';
+            const m = Math.floor(seconds / 60);
+            const s = (seconds % 60).toFixed(0);
+            return `${m}m ${s}s`;
+        }
+
+        function renderDashboard(runs) {
+            const app = document.getElementById('app');
+            const latest = runs[runs.length - 1];
+            const totalRuns = runs.length;
+            const allPassing = latest.failed === 0;
+            const avgDuration = (runs.reduce((s, r) => s + r.duration_s, 0) / runs.length).toFixed(1);
+            const avgPassRate = (runs.reduce((s, r) => s + r.pass_rate, 0) / runs.length).toFixed(1);
+
+            app.innerHTML = `
+                <div class="header">
+                    <div class="header-left">
+                        <div class="logo">T</div>
+                        <h1>Test Dashboard <span>— Testify Automation</span></h1>
+                    </div>
+                    <div class="header-right">
+                        <span class="badge ${allPassing ? 'badge-green' : 'badge-red'}">
+                            ${allPassing ? '● ALL PASSING' : '● FAILURES DETECTED'}
+                        </span>
+                        <a href="catalog.html" style="background: var(--bg-card); border: 1px solid var(--border); color: var(--accent-blue); padding: 8px 16px; border-radius: 8px; font-size: 13px; font-family: inherit; text-decoration: none; transition: all 0.2s;">📋 Test Catalog</a>
+                        <button class="refresh-btn" onclick="location.reload()">↻ Refresh</button>
+                    </div>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-label">Total Runs</div>
+                        <div class="stat-value stat-blue">${totalRuns}</div>
+                        <div class="stat-sub">All time</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Latest Pass Rate</div>
+                        <div class="stat-value ${latest.pass_rate === 100 ? 'stat-green' : 'stat-red'}">${latest.pass_rate}%</div>
+                        <div class="stat-sub">${latest.passed}/${latest.total} scenarios</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Avg Pass Rate</div>
+                        <div class="stat-value stat-yellow">${avgPassRate}%</div>
+                        <div class="stat-sub">Across all runs</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Avg Duration</div>
+                        <div class="stat-value" style="color: var(--accent-purple)">${formatDuration(parseFloat(avgDuration))}</div>
+                        <div class="stat-sub">Per run</div>
+                    </div>
+                </div>
+
+                <div class="charts-row">
+                    <div class="card">
+                        <div class="card-title"><span class="icon">📈</span> Pass Rate Trend</div>
+                        <canvas id="trendChart" height="90"></canvas>
+                    </div>
+                    <div class="card">
+                        <div class="card-title"><span class="icon">🎯</span> Latest Breakdown</div>
+                        <canvas id="donutChart" height="180"></canvas>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-title"><span class="icon">📋</span> Run History</div>
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Run</th>
+                                    <th>Date & Time</th>
+                                    <th>Status</th>
+                                    <th>Pass Rate</th>
+                                    <th>Passed</th>
+                                    <th>Failed</th>
+                                    <th>Total</th>
+                                    <th>Duration</th>
+                                    <th>Filter</th>
+                                </tr>
+                            </thead>
+                            <tbody id="historyBody"></tbody>
+                        </table>
+                    </div>
+                </div>
+            `;
+
+            // Render table rows (newest first)
+            const tbody = document.getElementById('historyBody');
+            [...runs].reverse().forEach((run, i) => {
+                const runNum = runs.length - i;
+                const allPass = run.failed === 0;
+                const color = allPass ? 'var(--accent-green)' : 'var(--accent-red)';
+                tbody.innerHTML += `
+                    <tr>
+                        <td class="mono">#${runNum}</td>
+                        <td>${formatDate(run.timestamp)}</td>
+                        <td>
+                            <span class="status-dot ${allPass ? 'pass' : 'fail'}"></span>
+                            ${allPass ? 'Passed' : 'Failed'}
+                        </td>
+                        <td>
+                            <span class="progress-bar">
+                                <span class="progress-fill" style="width: ${run.pass_rate}%; background: ${color};"></span>
+                            </span>
+                            ${run.pass_rate}%
+                        </td>
+                        <td class="stat-green">${run.passed}</td>
+                        <td class="${run.failed > 0 ? 'stat-red' : ''}">${run.failed}</td>
+                        <td>${run.total}</td>
+                        <td class="mono">${formatDuration(run.duration_s)}</td>
+                        <td class="mono">${run.tags_filter || 'all'}</td>
+                    </tr>
+                `;
+            });
+
+            // Trend Chart
+            const labels = runs.map((r, i) => `#${i + 1}`);
+            new Chart(document.getElementById('trendChart'), {
+                type: 'line',
+                data: {
+                    labels,
+                    datasets: [
+                        {
+                            label: 'Pass Rate %',
+                            data: runs.map(r => r.pass_rate),
+                            borderColor: '#34d399',
+                            backgroundColor: 'rgba(52, 211, 153, 0.08)',
+                            fill: true,
+                            tension: 0.3,
+                            pointRadius: 5,
+                            pointBackgroundColor: '#34d399',
+                            borderWidth: 2,
+                        },
+                        {
+                            label: 'Duration (s)',
+                            data: runs.map(r => r.duration_s),
+                            borderColor: '#a78bfa',
+                            borderDash: [4, 4],
+                            tension: 0.3,
+                            pointRadius: 4,
+                            pointBackgroundColor: '#a78bfa',
+                            borderWidth: 1.5,
+                            yAxisID: 'y1',
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: { labels: { color: '#9aa0ac', font: { size: 11 } } }
+                    },
+                    scales: {
+                        x: { ticks: { color: '#6b7280' }, grid: { color: '#2d3144' } },
+                        y: {
+                            min: 0, max: 100,
+                            ticks: { color: '#6b7280', callback: v => v + '%' },
+                            grid: { color: '#2d3144' }
+                        },
+                        y1: {
+                            position: 'right',
+                            ticks: { color: '#6b7280', callback: v => v + 's' },
+                            grid: { display: false }
+                        }
+                    }
+                }
+            });
+
+            // Donut Chart
+            new Chart(document.getElementById('donutChart'), {
+                type: 'doughnut',
+                data: {
+                    labels: ['Passed', 'Failed', 'Broken', 'Skipped'],
+                    datasets: [{
+                        data: [latest.passed, latest.failed, latest.broken, latest.skipped],
+                        backgroundColor: ['#34d399', '#f87171', '#fbbf24', '#6b7280'],
+                        borderWidth: 0,
+                        hoverOffset: 6
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    cutout: '65%',
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: { color: '#9aa0ac', font: { size: 11 }, padding: 16 }
+                        }
+                    }
+                }
+            });
+        }
+
+        loadData();
+    </script>
+</body>
+
+</html>

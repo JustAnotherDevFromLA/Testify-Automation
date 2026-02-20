@@ -1,0 +1,36 @@
+# Virtual environments
+venv/
+.venv/
+env/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+*.egg
+dist/
+build/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Reports — generated at runtime by run_tests.sh
+reports/allure-results/
+reports/allure-report/
+reports/allure-history/
+reports/screenshots/
+reports/TESTS-*.xml
+reports/results.json
+reports/run_history.json
+reports/test_catalog.json
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Gemini agent artifacts
+.gemini/
