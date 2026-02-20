@@ -18,6 +18,9 @@ build/
 *.swo
 *~
 
+# Linting cache
+.ruff_cache/
+
 # Reports — generated at runtime by run_tests.sh
 reports/allure-results/
 reports/allure-report/
