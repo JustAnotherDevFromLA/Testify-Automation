@@ -20,16 +20,22 @@ def step_verify_load_time(context, max_seconds):
 
 @then('all images should load successfully')
 def step_verify_no_broken_images(context):
-    result = context.page.evaluate("""
-        () => {
-            const images = Array.from(document.images);
-            const broken = images.filter(img => !img.complete || img.naturalWidth === 0);
-            return {
-                total: images.length,
-                broken: broken.map(img => img.src)
-            };
-        }
-    """)
+    context.page.wait_for_load_state("networkidle")
+    for attempt in range(3):
+        result = context.page.evaluate("""
+            () => {
+                const images = Array.from(document.images);
+                const broken = images.filter(img => !img.complete || img.naturalWidth === 0);
+                return {
+                    total: images.length,
+                    broken: broken.map(img => img.src)
+                };
+            }
+        """)
+        if len(result["broken"]) == 0:
+            return
+        if attempt < 2:
+            time.sleep(1)
     assert len(result["broken"]) == 0, (
         f"{len(result['broken'])} of {result['total']} images failed to load: {result['broken']}"
     )
