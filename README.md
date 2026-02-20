@@ -9,11 +9,13 @@ Automated test suite for [artasheskocharyan.com](https://artasheskocharyan.com) 
 - [Features](#features)
 - [Prerequisites](#prerequisites)
 - [Setup](#setup)
+- [Configuration](#configuration)
 - [Running Tests](#running-tests)
 - [Test Suites](#test-suites)
 - [Project Structure](#project-structure)
 - [Reporting](#reporting)
 - [CI/CD](#cicd)
+- [Linting](#linting)
 - [Writing New Tests](#writing-new-tests)
 - [Troubleshooting](#troubleshooting)
 
@@ -25,12 +27,15 @@ Automated test suite for [artasheskocharyan.com](https://artasheskocharyan.com) 
 |---|---|
 | **26 test cases** across 3 feature files | Regression, accessibility, performance |
 | **Tag-based filtering** | Run smoke, sanity, or specific category tests |
-| **Page Object Model** | Selectors isolated in reusable page classes |
+| **Page Object Model** | Selectors isolated in reusable, typed page classes |
+| **Centralized configuration** | All settings driven by environment variables via `config.py` |
+| **Structured logging** | Python `logging` module with configurable log levels |
 | **Allure reporting** | Rich per-scenario results with failure screenshots |
 | **Run tracking dashboard** | Pass rate trends, duration tracking, run history |
 | **Auto-generated test catalog** | Browsable view of all test cases by suite and tag |
 | **CI/CD pipeline** | GitHub Actions with smoke → sanity → regression stages |
-| **Network resilience** | Auto-retry on transient connection errors |
+| **Network resilience** | Auto-retry on transient `net::ERR_` connection errors |
+| **Linting** | `ruff` configured via `pyproject.toml` |
 
 ---
 
@@ -60,6 +65,38 @@ pip install -r requirements.txt
 
 # 4. Install Playwright browsers
 python -m playwright install chromium
+```
+
+---
+
+## Configuration
+
+All settings are centralized in `config.py` and can be overridden via environment variables. No code changes are needed to switch between environments.
+
+| Variable | Default | Description |
+|---|---|---|
+| `BASE_URL` | `https://artasheskocharyan.com` | Target site URL |
+| `HEADLESS` | `true` | Run browser in headless mode |
+| `BROWSER` | `chromium` | Browser engine (`chromium`, `firefox`, `webkit`) |
+| `VIEWPORT_WIDTH` | `1280` | Default viewport width (px) |
+| `VIEWPORT_HEIGHT` | `720` | Default viewport height (px) |
+| `DEFAULT_TIMEOUT` | `30000` | Element interaction timeout (ms) |
+| `NAVIGATION_TIMEOUT` | `60000` | Page navigation timeout (ms) |
+| `RETRY_ATTEMPTS` | `3` | Navigation retry count on network errors |
+| `RETRY_DELAY` | `2` | Delay between retries (seconds) |
+| `LOG_LEVEL` | `INFO` | Logging verbosity (`DEBUG`, `INFO`, `WARNING`, `ERROR`) |
+
+### Examples
+
+```bash
+# Run against a staging environment
+BASE_URL=https://staging.artasheskocharyan.com ./run_tests.sh
+
+# Run with visible browser for debugging
+HEADLESS=false ./run_tests.sh smoke
+
+# Enable verbose logging
+LOG_LEVEL=DEBUG ./run_tests.sh --name="TC-009"
 ```
 
 ---
@@ -166,27 +203,31 @@ Automation/
 │   ├── regression.feature      # 18 regression test cases
 │   ├── accessibility.feature   # 5 a11y test cases
 │   ├── performance.feature     # 3 performance test cases
-│   ├── environment.py          # Behave hooks (browser setup/teardown)
+│   ├── environment.py          # Behave hooks (browser lifecycle, logging)
 │   └── steps/
+│       ├── __init__.py
 │       ├── home_steps.py       # Navigation, content, UI steps
 │       ├── contact_steps.py    # Contact form steps
 │       ├── portfolio_steps.py  # Portfolio item steps
 │       ├── responsive_steps.py # Mobile viewport steps
 │       ├── accessibility_steps.py
 │       └── performance_steps.py
-├── pages/                      # Page Object Model
-│   ├── base_page.py            # Base class with retry logic
+├── pages/                      # Page Object Model (typed, documented)
+│   ├── __init__.py
+│   ├── base_page.py            # Base class with retry logic & logging
 │   ├── home_page.py            # Main page selectors & actions
 │   ├── contact_page.py         # Contact form selectors & actions
 │   └── responsive_page.py     # Mobile viewport testing
 ├── reports/                    # Generated reports (gitignored except templates)
 │   ├── dashboard.html          # Run tracking dashboard
 │   └── catalog.html            # Auto-generated test catalog
+├── config.py                   # Centralized env-var-driven configuration
 ├── run_tests.sh                # One-command test runner
 ├── collect_results.py          # Allure result parser → dashboard
 ├── generate_catalog.py         # Feature file parser → catalog
 ├── behave.ini                  # Behave configuration
-├── requirements.txt            # Python dependencies
+├── pyproject.toml              # Project metadata + ruff linter config
+├── requirements.txt            # Pinned Python dependencies
 └── TEST_STRATEGY.md            # Full test strategy document
 ```
 
@@ -247,6 +288,26 @@ You can trigger any suite manually from the GitHub Actions tab by selecting the 
 
 ---
 
+## Linting
+
+The project uses [ruff](https://docs.astral.sh/ruff/) for linting and import sorting, configured in `pyproject.toml`.
+
+```bash
+# Install ruff (one-time)
+pip install ruff
+
+# Check for lint issues
+ruff check .
+
+# Auto-fix fixable issues
+ruff check . --fix
+
+# Format code
+ruff format .
+```
+
+---
+
 ## Writing New Tests
 
 ### 1. Add a Scenario
@@ -304,7 +365,7 @@ The test catalog will auto-update to include your new scenario.
 This is a transient network error. The base page object retries navigation up to 3 times with a 2-second backoff. If it persists:
 - Check your internet connection
 - Try running a smaller suite first: `./run_tests.sh smoke`
-- Increase retries in `pages/base_page.py` if needed
+- Increase retries via environment variable: `RETRY_ATTEMPTS=5 ./run_tests.sh`
 
 ### `allure: command not found`
 
