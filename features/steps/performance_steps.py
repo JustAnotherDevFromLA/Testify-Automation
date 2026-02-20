@@ -1,5 +1,6 @@
 import time
-from behave import given, when, then
+
+from behave import then, when
 
 
 @when('the user measures the page load time')

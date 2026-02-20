@@ -1,4 +1,5 @@
-from behave import given, when, then
+from behave import given, then, when
+
 
 @given('the user navigates to the home page')
 def step_navigate_to_home(context):

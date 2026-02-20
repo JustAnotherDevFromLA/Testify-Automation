@@ -3,7 +3,6 @@
 
 import json
 import re
-import sys
 from pathlib import Path
 
 FEATURES_DIR = Path(__file__).parent / "features"
@@ -79,9 +78,7 @@ def parse_feature_file(filepath: Path) -> dict:
                     continue
                 if in_examples and not step_line.startswith("|"):
                     break
-                if step_line.startswith(("Given ", "When ", "Then ", "And ", "But ")):
-                    steps.append(step_line)
-                elif step_line.startswith("|"):
+                if step_line.startswith(("Given ", "When ", "Then ", "And ", "But ")) or step_line.startswith("|"):
                     steps.append(step_line)
                 j += 1
 

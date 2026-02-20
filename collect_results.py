@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Collects Behave test results and appends them to a run history JSON file."""
 import json
-import os
+import re
 import sys
 from datetime import datetime
 from pathlib import Path
@@ -28,7 +28,7 @@ def parse_allure_results(results_dir: Path) -> dict:
             status = result.get("status", "unknown")
             name = result.get("name", "Unknown")
             duration = result.get("stop", 0) - result.get("start", 0)
-            labels = {l["name"]: l["value"] for l in result.get("labels", [])}
+            labels = {label["name"]: label["value"] for label in result.get("labels", [])}
 
             if status == "passed":
                 passed += 1
@@ -111,7 +111,6 @@ def inject_into_dashboard(history: list):
         slim_history.append(slim)
 
     data_line = f"        window.__RUN_DATA__ = {json.dumps(slim_history)};"
-    import re
     html = re.sub(
         r"        window\.__RUN_DATA__ = .*?;",
         data_line,

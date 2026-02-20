@@ -5,11 +5,11 @@ from behave import given, then
 def step_navigate_mobile(context):
     # Close the default desktop context and create a fresh mobile one
     context.page.close()
-    context.context.close()
-    context.context = context.browser.new_context(
+    context.browser_context.close()
+    context.browser_context = context.browser.new_context(
         viewport={"width": 375, "height": 667}
     )
-    context.page = context.context.new_page()
+    context.page = context.browser_context.new_page()
     # Re-create page objects with the new mobile page
     from pages.home_page import HomePage
     from pages.responsive_page import ResponsivePage
