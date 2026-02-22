@@ -16,18 +16,18 @@ class BasePage:
     def __init__(self, page: Page) -> None:
         self.page = page
 
-    def navigate(self, url: str, retries: int | None = None) -> None:
+    def navigate(self, url: str, wait_until: str = "networkidle", retries: int | None = None) -> None:
         """Navigate to *url*, retrying on transient network errors.
 
         Args:
             url: The URL to navigate to.
+            wait_until: When to consider navigation succeeded ("domcontentloaded", "load", "networkidle").
             retries: Override retry count (defaults to ``config.RETRY_ATTEMPTS``).
         """
         max_attempts = retries if retries is not None else config.RETRY_ATTEMPTS
         for attempt in range(max_attempts):
             try:
-                self.page.goto(url, timeout=config.NAVIGATION_TIMEOUT_MS)
-                self.page.wait_for_load_state("domcontentloaded")
+                self.page.goto(url, timeout=config.NAVIGATION_TIMEOUT_MS, wait_until=wait_until)
                 return
             except Exception as e:
                 if attempt < max_attempts - 1 and "net::ERR_" in str(e):
