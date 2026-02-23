@@ -330,3 +330,29 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+
+  # Send Email Notification on Any Failure
+  notify-failure:
+    needs: [quality, smoke, sanity, regression, accessibility, performance, report, deploy-pages]
+    if: always() && contains(needs.*.result, 'failure')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send Email Notification
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: smtp.gmail.com
+          server_port: 465
+          username: ${{ secrets.SMTP_USERNAME }}
+          password: ${{ secrets.SMTP_PASSWORD }}
+          subject: "🚨 Testify CI Pipeline Failed: ${{ github.repository }} (#${{ github.run_number }})"
+          to: artasheskocharyan@gmail.com
+          from: "Testify Automation CI"
+          body: |
+            The Testify Automation pipeline just encountered a failure!
+            
+            Repository: ${{ github.repository }}
+            Branch: ${{ github.ref_name }}
+            Commit: ${{ github.sha }}
+            Run URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+            
+            Please check the GitHub Actions logs via the link above to investigate the issue.
