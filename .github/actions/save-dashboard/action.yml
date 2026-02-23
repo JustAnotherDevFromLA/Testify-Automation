@@ -17,8 +17,9 @@ runs:
         if ! git diff --staged --quiet; then
           git commit -m "chore(ci): update test dashboard [skip ci]"
           
-          # Rebase on latest main to avoid fast-forward errors (concurrency fix)
-          git pull --rebase origin main
+          # Pull with rebase and auto-resolve conflicts (ours/theirs strategy)
+          # We prefer OUR changes (the new run data) over whatever is upstream for these specific files
+          git pull --rebase -X ours origin main
           git push origin HEAD:main
         else
           echo "No changes to dashboard."
