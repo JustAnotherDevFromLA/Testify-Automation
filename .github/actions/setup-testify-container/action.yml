@@ -8,8 +8,8 @@ runs:
       run: |
         if ! command -v python3 &> /dev/null || ! python3 -m pip --version &> /dev/null; then
           echo "Installing Python3 and pip..."
-          sudo apt-get update
-          sudo apt-get install -y python3 python3-pip
+          apt-get update
+          apt-get install -y python3 python3-pip
         else
           echo "Python3 and pip are already installed."
         fi
@@ -17,5 +17,5 @@ runs:
     - name: Install Python dependencies
       shell: bash
       run: |
-        python3 -m pip install --upgrade pip
-        pip install -r requirements.txt
+        python3 -m pip install --upgrade pip --break-system-packages
+        pip install -r requirements.txt --break-system-packages

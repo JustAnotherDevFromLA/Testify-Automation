@@ -48,7 +48,7 @@ jobs:
     runs-on: ubuntu-latest
     container:
       image: mcr.microsoft.com/playwright:v1.57.0-jammy
-      options: --user 1001 # Fix file ownership issues in GHA
+      # Removed --user 1001 to allow root access for apt-get
     steps:
       - uses: actions/checkout@v4
 
@@ -79,7 +79,6 @@ jobs:
     runs-on: ubuntu-latest
     container:
       image: mcr.microsoft.com/playwright:v1.57.0-jammy
-      options: --user 1001
     steps:
       - uses: actions/checkout@v4
 
@@ -110,7 +109,6 @@ jobs:
     runs-on: ubuntu-latest
     container:
       image: mcr.microsoft.com/playwright:v1.57.0-jammy
-      options: --user 1001
     steps:
       - uses: actions/checkout@v4
 
@@ -153,7 +151,6 @@ jobs:
     runs-on: ubuntu-latest
     container:
       image: mcr.microsoft.com/playwright:v1.57.0-jammy
-      options: --user 1001
     steps:
       - uses: actions/checkout@v4
 
@@ -184,7 +181,6 @@ jobs:
     runs-on: ubuntu-latest
     container:
       image: mcr.microsoft.com/playwright:v1.57.0-jammy
-      options: --user 1001
     steps:
       - uses: actions/checkout@v4
 
