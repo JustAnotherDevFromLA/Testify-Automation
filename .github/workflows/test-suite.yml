@@ -127,6 +127,10 @@ jobs:
     runs-on: ubuntu-latest
     container:
       image: mcr.microsoft.com/playwright:v1.57.0-jammy
+    strategy:
+      fail-fast: false
+      matrix:
+        browser: [chromium, firefox, webkit]
     steps:
       - uses: actions/checkout@v4
 
@@ -141,11 +145,13 @@ jobs:
           echo "$PWD/allure-2.27.0/bin" >> $GITHUB_PATH
 
       - name: Run Full Regression
+        env:
+          BROWSER: ${{ matrix.browser }}
         run: python3 -m behave --no-capture
 
       - name: Collect results
         if: always()
-        run: python3 collect_results.py
+        run: python3 collect_results.py regression-${{ matrix.browser }}
 
       - name: Generate Allure report
         if: always()
@@ -155,7 +161,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: allure-results-regression
+          name: allure-results-regression-${{ matrix.browser }}
           path: reports/allure-results
           retention-days: 1
 
@@ -163,7 +169,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: regression-reports
+          name: regression-reports-${{ matrix.browser }}
           path: |
             reports/allure-report/
             reports/screenshots/
@@ -290,6 +296,9 @@ jobs:
           process_results "smoke"
           process_results "sanity"
           process_results "regression"
+          process_results "regression-chromium"
+          process_results "regression-firefox"
+          process_results "regression-webkit"
           process_results "accessibility"
           process_results "performance"
 
