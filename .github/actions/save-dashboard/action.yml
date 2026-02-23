@@ -1,0 +1,21 @@
+name: "Save Dashboard Changes"
+description: "Commits and pushes updated dashboard and history files"
+runs:
+  using: "composite"
+  steps:
+    - name: Commit and Push Dashboard
+      shell: bash
+      run: |
+        git config --global user.name "Testify Bot"
+        git config --global user.email "bot@testify.com"
+        git config --global --add safe.directory '*'
+        
+        git add reports/run_history.json reports/dashboard.html
+        
+        # Only commit if there are changes
+        if ! git diff --staged --quiet; then
+          git commit -m "chore(ci): update test dashboard [skip ci]"
+          git push
+        else
+          echo "No changes to dashboard."
+        fi

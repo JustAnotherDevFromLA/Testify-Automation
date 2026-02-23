@@ -22,6 +22,9 @@ on:
           - accessibility
           - performance
 
+permissions:
+  contents: write
+
 jobs:
   # Quality gate: Linting
   quality:
@@ -48,7 +51,6 @@ jobs:
     runs-on: ubuntu-latest
     container:
       image: mcr.microsoft.com/playwright:v1.57.0-jammy
-      # Removed --user 1001 to allow root access for apt-get
     steps:
       - uses: actions/checkout@v4
 
@@ -61,6 +63,10 @@ jobs:
       - name: Collect results
         if: always()
         run: python3 collect_results.py smoke
+
+      - name: Save Dashboard
+        if: always()
+        uses: ./.github/actions/save-dashboard
 
       - name: Upload test reports
         if: always()
@@ -91,6 +97,10 @@ jobs:
       - name: Collect results
         if: always()
         run: python3 collect_results.py sanity
+
+      - name: Save Dashboard
+        if: always()
+        uses: ./.github/actions/save-dashboard
 
       - name: Upload test reports
         if: always()
@@ -129,6 +139,10 @@ jobs:
         if: always()
         run: python3 collect_results.py
 
+      - name: Save Dashboard
+        if: always()
+        uses: ./.github/actions/save-dashboard
+
       - name: Generate Allure report
         if: always()
         run: allure generate reports/allure-results --clean -o reports/allure-report
@@ -164,6 +178,10 @@ jobs:
         if: always()
         run: python3 collect_results.py accessibility
 
+      - name: Save Dashboard
+        if: always()
+        uses: ./.github/actions/save-dashboard
+
       - name: Upload test reports
         if: always()
         uses: actions/upload-artifact@v4
@@ -193,6 +211,10 @@ jobs:
       - name: Collect results
         if: always()
         run: python3 collect_results.py performance
+
+      - name: Save Dashboard
+        if: always()
+        uses: ./.github/actions/save-dashboard
 
       - name: Upload test reports
         if: always()
