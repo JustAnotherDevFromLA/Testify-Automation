@@ -64,11 +64,15 @@ jobs:
         if: always()
         run: python3 collect_results.py smoke
 
-      - name: Save Dashboard
+      - name: Upload Test Results (Raw)
         if: always()
-        uses: ./.github/actions/save-dashboard
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-results-smoke
+          path: reports/allure-results
+          retention-days: 1
 
-      - name: Upload test reports
+      - name: Upload Report (HTML)
         if: always()
         uses: actions/upload-artifact@v4
         with:
@@ -98,11 +102,15 @@ jobs:
         if: always()
         run: python3 collect_results.py sanity
 
-      - name: Save Dashboard
+      - name: Upload Test Results (Raw)
         if: always()
-        uses: ./.github/actions/save-dashboard
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-results-sanity
+          path: reports/allure-results
+          retention-days: 1
 
-      - name: Upload test reports
+      - name: Upload Report (HTML)
         if: always()
         uses: actions/upload-artifact@v4
         with:
@@ -139,15 +147,19 @@ jobs:
         if: always()
         run: python3 collect_results.py
 
-      - name: Save Dashboard
-        if: always()
-        uses: ./.github/actions/save-dashboard
-
       - name: Generate Allure report
         if: always()
         run: allure generate reports/allure-results --clean -o reports/allure-report
 
-      - name: Upload test reports
+      - name: Upload Test Results (Raw)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-results-regression
+          path: reports/allure-results
+          retention-days: 1
+
+      - name: Upload Report (HTML)
         if: always()
         uses: actions/upload-artifact@v4
         with:
@@ -178,11 +190,15 @@ jobs:
         if: always()
         run: python3 collect_results.py accessibility
 
-      - name: Save Dashboard
+      - name: Upload Test Results (Raw)
         if: always()
-        uses: ./.github/actions/save-dashboard
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-results-accessibility
+          path: reports/allure-results
+          retention-days: 1
 
-      - name: Upload test reports
+      - name: Upload Report (HTML)
         if: always()
         uses: actions/upload-artifact@v4
         with:
@@ -212,11 +228,15 @@ jobs:
         if: always()
         run: python3 collect_results.py performance
 
-      - name: Save Dashboard
+      - name: Upload Test Results (Raw)
         if: always()
-        uses: ./.github/actions/save-dashboard
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-results-performance
+          path: reports/allure-results
+          retention-days: 1
 
-      - name: Upload test reports
+      - name: Upload Report (HTML)
         if: always()
         uses: actions/upload-artifact@v4
         with:
@@ -225,3 +245,51 @@ jobs:
             reports/screenshots/
             reports/run_history.json
             reports/dashboard.html
+
+  # Final Job: Aggregate Results and Update Dashboard
+  report:
+    if: always()
+    needs: [smoke, sanity, regression, accessibility, performance]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Download All Artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+
+      - name: Process Results
+        run: |
+          mkdir -p reports/allure-results
+          
+          process_results() {
+            local suite=$1
+            local dir="artifacts/allure-results-$suite"
+            if [ -d "$dir" ]; then
+              echo "Processing $suite..."
+              # Append results to the target dir
+              cp -r "$dir"/* reports/allure-results/
+              
+              # Run collection to update run_history.json
+              # Note: collect_results reads reports/allure-results and appends to run_history.json
+              python collect_results.py "$suite"
+              
+              # Clear allure-results so next iteration doesn't double-count
+              rm reports/allure-results/*
+            fi
+          }
+
+          process_results "smoke"
+          process_results "sanity"
+          process_results "regression"
+          process_results "accessibility"
+          process_results "performance"
+
+      - name: Save Dashboard
+        uses: ./.github/actions/save-dashboard
