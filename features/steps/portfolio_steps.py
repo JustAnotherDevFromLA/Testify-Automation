@@ -6,6 +6,12 @@ def step_verify_portfolio_count(context, count):
     context.home_page.verify_portfolio_item_count(count)
 
 
+@then('I should see at least {count:d} portfolio items')
+def step_impl(context, count):
+    # Intentional failure to test CI email notifications
+    assert False, f"Intentional failure injected to test CI email alerts! Expected {count} items."
+
+
 @then('the portfolio item "{title}" should be visible')
 def step_verify_portfolio_item(context, title):
     context.home_page.verify_portfolio_item_title_visible(title)
