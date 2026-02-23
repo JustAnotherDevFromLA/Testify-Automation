@@ -10,7 +10,8 @@ runs:
         git config --global user.email "bot@testify.com"
         git config --global --add safe.directory '*'
         
-        git add reports/run_history.json reports/dashboard.html
+        # Force add ignored report files
+        git add -f reports/run_history.json reports/dashboard.html
         
         # Only commit if there are changes
         if ! git diff --staged --quiet; then
