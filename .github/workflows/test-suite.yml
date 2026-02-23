@@ -299,7 +299,7 @@ jobs:
   # Deploy Dashboard to GitHub Pages
   deploy-pages:
     needs: report
-    if: needs.report.result == 'success' && github.ref == 'refs/heads/main'
+    if: always() && needs.report.result == 'success' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     permissions:
       contents: read
