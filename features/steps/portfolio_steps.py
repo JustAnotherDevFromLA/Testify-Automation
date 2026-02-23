@@ -9,7 +9,7 @@ def step_verify_portfolio_count(context, count):
 @then('I should see at least {count:d} portfolio items')
 def step_impl(context, count):
     # Intentional failure to test CI email notifications with screenshots
-    assert False, f"Intentional failure injected to test CI email alerts! Expected {count} items."
+    raise AssertionError(f"Intentional failure injected to test CI email alerts! Expected {count} items.")
 
 
 @then('the portfolio item "{title}" should be visible')
