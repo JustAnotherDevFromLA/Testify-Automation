@@ -4,7 +4,7 @@
 import json
 import re
 import sys
-from datetime import datetime
+from datetime import datetime, timezone
 from pathlib import Path
 
 REPORTS_DIR = Path(__file__).parent / "reports"
@@ -73,8 +73,8 @@ def collect_and_save(tags_filter: str = ""):
 
     # Parse results
     run_data = parse_allure_results(ALLURE_RESULTS_DIR)
-    run_data["timestamp"] = datetime.now().isoformat()
-    run_data["run_id"] = datetime.now().strftime("%Y%m%d_%H%M%S")
+    run_data["timestamp"] = datetime.now(timezone.utc).isoformat()
+    run_data["run_id"] = datetime.now(timezone.utc).strftime("%Y%m%d_%H%M%S")
     run_data["tags_filter"] = tags_filter
 
     # Load existing history
