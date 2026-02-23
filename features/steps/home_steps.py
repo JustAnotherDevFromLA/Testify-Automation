@@ -9,8 +9,7 @@ def step_navigate_to_home(context):
 
 @then('the page title should be "{title_text}"')
 def step_verify_page_title(context, title_text):
-    # Intentional failure to trigger CI email with screenshots
-    raise AssertionError(f"Intentional test failure injected for {title_text}")
+    context.home_page.verify_title(title_text)
 
 
 @when('the user clicks on the "{link_name}" link')
