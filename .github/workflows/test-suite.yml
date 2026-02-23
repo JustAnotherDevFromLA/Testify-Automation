@@ -147,6 +147,7 @@ jobs:
       - name: Run Full Regression
         env:
           BROWSER: ${{ matrix.browser }}
+          HOME: /root
         run: python3 -m behave --no-capture
 
       - name: Collect results
