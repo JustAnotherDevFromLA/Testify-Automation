@@ -1,7 +1,7 @@
 from behave import then
 
 
-@then('there should be {count:d} portfolio items')
+@then("there should be {count:d} portfolio items")
 def step_verify_portfolio_count(context, count):
     context.home_page.verify_portfolio_item_count(count)
 
@@ -17,7 +17,6 @@ def step_verify_portfolio_github_link(context, title):
     assert "github.com" in href, f"Expected '{title}' to link to GitHub, got '{href}'"
 
 
-@then('each portfolio item should have a visible image')
+@then("each portfolio item should have a visible image")
 def step_verify_portfolio_images(context):
     context.home_page.verify_portfolio_item_images()
-

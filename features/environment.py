@@ -1,4 +1,5 @@
 """Behave environment hooks — browser lifecycle, page object setup, and failure handling."""
+
 import logging
 import os
 from datetime import datetime

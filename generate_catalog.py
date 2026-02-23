@@ -153,9 +153,7 @@ def build_catalog():
         "generated_at": __import__("datetime").datetime.now().isoformat(),
         "total_features": len(features),
         "total_scenarios": len(all_scenarios),
-        "total_with_examples": sum(
-            s["example_count"] if s["example_count"] > 0 else 1 for s in all_scenarios
-        ),
+        "total_with_examples": sum(s["example_count"] if s["example_count"] > 0 else 1 for s in all_scenarios),
         "all_tags": sorted(all_tags),
         "suites": {k: {"count": len(v), "tests": v} for k, v in suite_map.items()},
         "features": features,

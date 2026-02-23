@@ -1,4 +1,5 @@
 """Base page object with shared navigation, retry, and assertion helpers."""
+
 import logging
 import time
 
@@ -33,7 +34,10 @@ class BasePage:
                 if attempt < max_attempts - 1 and "net::ERR_" in str(e):
                     logger.warning(
                         "Navigation attempt %d/%d failed (%s) — retrying in %ds",
-                        attempt + 1, max_attempts, str(e).split("\n")[0], config.RETRY_DELAY_S,
+                        attempt + 1,
+                        max_attempts,
+                        str(e).split("\n")[0],
+                        config.RETRY_DELAY_S,
                     )
                     time.sleep(config.RETRY_DELAY_S)
                 else:

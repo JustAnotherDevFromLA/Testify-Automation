@@ -3,7 +3,7 @@ import time
 from behave import then, when
 
 
-@when('the user measures the page load time')
+@when("the user measures the page load time")
 def step_measure_load_time(context):
     start = time.time()
     context.home_page.navigate_home()
@@ -11,14 +11,12 @@ def step_measure_load_time(context):
     context.load_time = end - start
 
 
-@then('the page should load in less than {max_seconds:d} seconds')
+@then("the page should load in less than {max_seconds:d} seconds")
 def step_verify_load_time(context, max_seconds):
-    assert context.load_time < max_seconds, (
-        f"Page took {context.load_time:.1f}s to load, expected < {max_seconds}s"
-    )
+    assert context.load_time < max_seconds, f"Page took {context.load_time:.1f}s to load, expected < {max_seconds}s"
 
 
-@then('all images should load successfully')
+@then("all images should load successfully")
 def step_verify_no_broken_images(context):
     context.page.wait_for_load_state("networkidle")
     for attempt in range(3):
@@ -41,7 +39,7 @@ def step_verify_no_broken_images(context):
     )
 
 
-@then('the total DOM element count should be less than {max_count:d}')
+@then("the total DOM element count should be less than {max_count:d}")
 def step_verify_dom_size(context, max_count):
     count = context.page.evaluate("() => document.getElementsByTagName('*').length")
     assert count < max_count, f"DOM has {count} elements, expected < {max_count}"

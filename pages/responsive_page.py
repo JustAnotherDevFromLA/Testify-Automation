@@ -1,4 +1,5 @@
 """Page object for testing responsive/mobile behavior."""
+
 from playwright.sync_api import Page
 
 import config
@@ -34,9 +35,7 @@ class ResponsivePage(BasePage):
 
     def verify_content_fills_viewport(self) -> None:
         """Assert the main content fills at least 90% of the viewport width."""
-        main_width = self.page.locator("#main, main, .wrapper").first.evaluate(
-            "el => el.getBoundingClientRect().width"
-        )
+        main_width = self.page.locator("#main, main, .wrapper").first.evaluate("el => el.getBoundingClientRect().width")
         viewport_width = self.page.evaluate("window.innerWidth")
         assert main_width >= viewport_width * 0.9, (
             f"Expected content to fill viewport ({viewport_width}px), but it's {main_width}px"

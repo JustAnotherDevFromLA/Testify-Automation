@@ -1,4 +1,5 @@
 """Page object for the contact form section."""
+
 from typing import ClassVar
 
 from playwright.sync_api import Page, expect

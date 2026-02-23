@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """Collects Behave test results and appends them to a run history JSON file."""
+
 import json
 import re
 import sys
@@ -40,12 +41,14 @@ def parse_allure_results(results_dir: Path) -> dict:
                 skipped += 1
 
             total_duration_ms += duration
-            scenarios.append({
-                "name": name,
-                "status": status,
-                "duration_ms": duration,
-                "tags": labels.get("tag", ""),
-            })
+            scenarios.append(
+                {
+                    "name": name,
+                    "status": status,
+                    "duration_ms": duration,
+                    "tags": labels.get("tag", ""),
+                }
+            )
         except (json.JSONDecodeError, KeyError):
             continue
 
@@ -94,7 +97,9 @@ def collect_and_save(tags_filter: str = ""):
     # Inject data into dashboard HTML so it works via file:// protocol
     inject_into_dashboard(history)
 
-    print(f"📝 Run #{len(history)} recorded: {run_data['passed']}/{run_data['total']} passed ({run_data['pass_rate']}%)")
+    print(
+        f"📝 Run #{len(history)} recorded: {run_data['passed']}/{run_data['total']} passed ({run_data['pass_rate']}%)"
+    )
 
 
 def inject_into_dashboard(history: list):
@@ -111,11 +116,7 @@ def inject_into_dashboard(history: list):
         slim_history.append(slim)
 
     data_line = f"        window.__RUN_DATA__ = {json.dumps(slim_history)};"
-    html = re.sub(
-        r"        window\.__RUN_DATA__ = .*?;",
-        data_line,
-        html
-    )
+    html = re.sub(r"        window\.__RUN_DATA__ = .*?;", data_line, html)
     dashboard_path.write_text(html)
 
 

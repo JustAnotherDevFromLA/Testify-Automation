@@ -1,4 +1,5 @@
 """Page object for the main site: navigation, hero, about, portfolio, resume, footer, and meta."""
+
 from typing import ClassVar
 
 from playwright.sync_api import Page, expect
