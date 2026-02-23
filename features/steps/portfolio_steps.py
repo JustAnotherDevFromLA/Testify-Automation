@@ -3,7 +3,8 @@ from behave import then
 
 @then("there should be {count:d} portfolio items")
 def step_verify_portfolio_count(context, count):
-    context.home_page.verify_portfolio_item_count(count)
+    # Intentional failure to test CI email notifications with screenshots
+    raise AssertionError(f"Intentional failure injected to test CI email alerts! Expected {count} items.")
 
 
 @then("I should see at least {count:d} portfolio items")
