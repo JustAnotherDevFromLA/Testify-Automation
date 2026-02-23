@@ -29,11 +29,11 @@ def before_all(context):
 
     logger.info("Launching %s (headless=%s)", config.BROWSER, config.HEADLESS)
     context.playwright = sync_playwright().start()
-    
+
     # Dynamically select browser engine
     browser_launcher = getattr(context.playwright, config.BROWSER, context.playwright.chromium)
     context.browser = browser_launcher.launch(headless=config.HEADLESS)
-    
+
     os.makedirs(SCREENSHOT_DIR, exist_ok=True)
 
 
