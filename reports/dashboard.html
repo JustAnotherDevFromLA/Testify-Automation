@@ -5,335 +5,594 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Test Suite Dashboard | Testify Automation</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     <style>
         :root {
-            --bg-primary: #0f1117;
-            --bg-secondary: #1a1d27;
-            --bg-card: #222533;
-            --bg-hover: #2a2e3f;
-            --text-primary: #e8eaed;
-            --text-secondary: #9aa0ac;
-            --text-muted: #6b7280;
-            --accent-green: #34d399;
-            --accent-green-bg: rgba(52, 211, 153, 0.1);
-            --accent-red: #f87171;
-            --accent-red-bg: rgba(248, 113, 113, 0.1);
-            --accent-yellow: #fbbf24;
-            --accent-blue: #60a5fa;
-            --accent-blue-bg: rgba(96, 165, 250, 0.12);
-            --accent-purple: #a78bfa;
-            --border: #2d3144;
-            --radius: 12px;
-            --shadow: 0 4px 24px rgba(0, 0, 0, 0.3);
+            /* Base Colors */
+            --bg-base: #0a0a0b;
+            --bg-surface: #121214;
+            --bg-surface-hover: #1c1c1f;
+            --bg-element: #232326;
+
+            /* Typography Colors */
+            --text-heading: #f9f9f9;
+            --text-body: #e5e5e5;
+            --text-muted: #8b8b93;
+            --text-subtle: #52525b;
+
+            /* Accent Colors */
+            --brand-primary: #6366f1;
+            --brand-primary-wash: rgba(99, 102, 241, 0.1);
+            --brand-secondary: #8b5cf6;
+
+            /* Status Colors */
+            --status-success: #22c55e;
+            --status-success-wash: rgba(34, 197, 94, 0.1);
+            --status-error: #ef4444;
+            --status-error-wash: rgba(239, 68, 68, 0.1);
+            --status-warning: #eab308;
+            --status-warning-wash: rgba(234, 179, 8, 0.1);
+            --status-info: #3b82f6;
+
+            /* Utility */
+            --border-color: #27272a;
+            --border-hover: #3f3f46;
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            --shadow-subtle: 0 4px 20px -2px rgba(0, 0, 0, 0.5);
+            --transition: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
 
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: var(--bg-primary);
-            color: var(--text-primary);
+            font-family: var(--font-sans);
+            background-color: var(--bg-base);
+            color: var(--text-body);
             min-height: 100vh;
             line-height: 1.6;
         }
 
         .container {
-            max-width: 1280px;
+            max-width: 1400px;
             margin: 0 auto;
-            padding: 32px 24px;
+            padding: 40px 32px;
         }
 
-        /* Header */
+        /* --- Header --- */
         .header {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            margin-bottom: 32px;
+            margin-bottom: 40px;
             padding-bottom: 24px;
-            border-bottom: 1px solid var(--border);
+            border-bottom: 1px solid var(--border-color);
+            animation: fadeIn 0.5s ease-out;
         }
 
         .header-left {
             display: flex;
             align-items: center;
-            gap: 16px;
+            gap: 20px;
         }
 
         .logo {
-            width: 44px;
-            height: 44px;
-            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
-            border-radius: 10px;
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, var(--brand-primary), var(--brand-secondary));
+            border-radius: var(--radius-md);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 20px;
+            color: white;
+            font-size: 24px;
             font-weight: 700;
+            box-shadow: 0 0 20px var(--brand-primary-wash);
         }
 
-        .header h1 {
-            font-size: 22px;
+        .title-group h1 {
+            font-size: 24px;
             font-weight: 700;
-            letter-spacing: -0.3px;
+            color: var(--text-heading);
+            letter-spacing: -0.5px;
+            line-height: 1.2;
         }
 
-        .header h1 span {
-            color: var(--text-secondary);
-            font-weight: 400;
+        .title-group p {
+            font-size: 14px;
+            color: var(--text-muted);
+            margin-top: 4px;
+            font-weight: 500;
         }
 
         .header-right {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 16px;
+        }
+
+        /* --- Components --- */
+        .btn {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            color: var(--text-heading);
+            padding: 10px 18px;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            font-family: var(--font-sans);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all var(--transition);
+        }
+
+        .btn:hover {
+            background: var(--bg-surface-hover);
+            border-color: var(--border-hover);
+            transform: translateY(-1px);
+        }
+
+        .btn-primary {
+            background: var(--brand-primary);
+            border-color: var(--brand-primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--brand-secondary);
+            border-color: var(--brand-secondary);
         }
 
         .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
             padding: 6px 14px;
             border-radius: 20px;
-            font-size: 12px;
+            font-size: 13px;
             font-weight: 600;
             letter-spacing: 0.3px;
         }
 
-        .badge-green {
-            background: var(--accent-green-bg);
-            color: var(--accent-green);
+        .badge-success {
+            background: var(--status-success-wash);
+            color: var(--status-success);
+            border: 1px solid rgba(34, 197, 94, 0.2);
         }
 
-        .badge-red {
-            background: var(--accent-red-bg);
-            color: var(--accent-red);
+        .badge-error {
+            background: var(--status-error-wash);
+            color: var(--status-error);
+            border: 1px solid rgba(239, 68, 68, 0.2);
         }
 
-        .badge-blue {
-            background: var(--accent-blue-bg);
-            color: var(--accent-blue);
+        .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
         }
 
-        .refresh-btn {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            color: var(--text-secondary);
-            padding: 8px 16px;
-            border-radius: 8px;
+        .dot.pulse-success {
+            background: var(--status-success);
+            box-shadow: 0 0 0 rgba(34, 197, 94, 0.4);
+            animation: pulse-success 2s infinite;
+        }
+
+        .dot.pulse-error {
+            background: var(--status-error);
+            box-shadow: 0 0 0 rgba(239, 68, 68, 0.4);
+            animation: pulse-error 2s infinite;
+        }
+
+        /* --- Filters Toolbar --- */
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        .filters {
+            display: flex;
+            gap: 12px;
+        }
+
+        .filter-select {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            color: var(--text-body);
+            padding: 8px 32px 8px 16px;
+            border-radius: var(--radius-sm);
+            font-family: var(--font-sans);
+            font-size: 14px;
+            font-weight: 500;
+            appearance: none;
             cursor: pointer;
-            font-size: 13px;
-            font-family: inherit;
-            transition: all 0.2s;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%238b8b93'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            background-size: 16px;
+            transition: border-color var(--transition);
         }
 
-        .refresh-btn:hover {
-            background: var(--bg-hover);
-            color: var(--text-primary);
+        .filter-select:hover,
+        .filter-select:focus {
+            outline: none;
+            border-color: var(--brand-primary);
         }
 
-        /* Stats Grid */
+        /* --- Stats Grid --- */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 16px;
-            margin-bottom: 28px;
+            gap: 24px;
+            margin-bottom: 32px;
+            animation: fadeIn 0.7s ease-out;
         }
 
         .stat-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            padding: 20px 24px;
-            transition: transform 0.2s, box-shadow 0.2s;
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+            transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--card-accent, transparent);
+            opacity: 0.8;
         }
 
         .stat-card:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow);
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-subtle);
+            border-color: var(--border-hover);
+        }
+
+        .stat-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
         }
 
         .stat-label {
-            font-size: 12px;
-            font-weight: 500;
+            font-size: 13px;
+            font-weight: 600;
             color: var(--text-muted);
             text-transform: uppercase;
-            letter-spacing: 0.8px;
-            margin-bottom: 8px;
+            letter-spacing: 0.5px;
         }
 
-        .stat-value {
-            font-size: 32px;
-            font-weight: 700;
-            letter-spacing: -1px;
-        }
-
-        .stat-sub {
-            font-size: 12px;
-            color: var(--text-secondary);
-            margin-top: 4px;
-        }
-
-        .stat-green {
-            color: var(--accent-green);
-        }
-
-        .stat-red {
-            color: var(--accent-red);
-        }
-
-        .stat-blue {
-            color: var(--accent-blue);
-        }
-
-        .stat-yellow {
-            color: var(--accent-yellow);
-        }
-
-        /* Charts Row */
-        .charts-row {
-            display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: 16px;
-            margin-bottom: 28px;
-        }
-
-        .card {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            padding: 24px;
-        }
-
-        .card-title {
-            font-size: 14px;
-            font-weight: 600;
-            color: var(--text-secondary);
-            margin-bottom: 20px;
+        .stat-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: var(--radius-sm);
             display: flex;
             align-items: center;
-            gap: 8px;
-        }
-
-        .card-title .icon {
+            justify-content: center;
+            background: var(--bg-element);
+            color: var(--text-heading);
             font-size: 16px;
         }
 
-        /* Run History Table */
+        .stat-value {
+            font-size: 36px;
+            font-weight: 700;
+            color: var(--text-heading);
+            letter-spacing: -1px;
+            line-height: 1;
+            margin-bottom: 8px;
+        }
+
+        .stat-sub {
+            font-size: 13px;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .metric-trend {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            font-weight: 600;
+        }
+
+        .trend-up {
+            color: var(--status-success);
+        }
+
+        .trend-down {
+            color: var(--status-error);
+        }
+
+        .trend-neutral {
+            color: var(--text-muted);
+        }
+
+        /* --- Charts --- */
+        .charts-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 24px;
+            margin-bottom: 32px;
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        .card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+
+        .card-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-heading);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card-title svg {
+            color: var(--text-muted);
+        }
+
+        .chart-container {
+            position: relative;
+            width: 100%;
+        }
+
+        /* --- Table --- */
+        .table-wrapper {
+            animation: fadeIn 0.9s ease-out;
+        }
+
         .table-container {
             overflow-x: auto;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border-color);
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
+            text-align: left;
         }
 
         th {
-            font-size: 11px;
+            background: var(--bg-surface-hover);
+            padding: 16px;
+            font-size: 12px;
             font-weight: 600;
             color: var(--text-muted);
             text-transform: uppercase;
-            letter-spacing: 0.8px;
-            padding: 12px 16px;
-            text-align: left;
-            border-bottom: 1px solid var(--border);
+            letter-spacing: 0.5px;
+            border-bottom: 1px solid var(--border-color);
+            white-space: nowrap;
         }
 
         td {
-            padding: 14px 16px;
-            font-size: 13px;
-            border-bottom: 1px solid var(--border);
+            padding: 16px;
+            font-size: 14px;
+            border-bottom: 1px solid var(--border-color);
+            color: var(--text-body);
+            font-weight: 500;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
         }
 
         tr:hover td {
-            background: var(--bg-hover);
+            background: rgba(255, 255, 255, 0.02);
         }
 
-        .status-dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
+        .cell-mono {
+            font-family: var(--font-mono);
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        .run-id {
+            color: var(--brand-primary);
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        .run-id:hover {
+            text-decoration: underline;
+        }
+
+        .tag-capsule {
             display: inline-block;
-            margin-right: 8px;
+            padding: 4px 10px;
+            border-radius: 6px;
+            background: var(--bg-element);
+            border: 1px solid var(--border-color);
+            font-size: 12px;
+            color: var(--text-muted);
+            font-family: var(--font-mono);
         }
 
-        .status-dot.pass {
-            background: var(--accent-green);
-            box-shadow: 0 0 6px var(--accent-green);
+        .status-cell {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
         }
 
-        .status-dot.fail {
-            background: var(--accent-red);
-            box-shadow: 0 0 6px var(--accent-red);
+        .status-text.pass {
+            color: var(--status-success);
         }
 
-        .progress-bar {
-            width: 120px;
+        .status-text.fail {
+            color: var(--status-error);
+        }
+
+        .progress-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .progress-track {
+            flex-grow: 1;
             height: 6px;
-            background: var(--bg-primary);
+            background: var(--bg-element);
             border-radius: 3px;
             overflow: hidden;
-            display: inline-block;
-            vertical-align: middle;
-            margin-right: 8px;
+            max-width: 120px;
         }
 
         .progress-fill {
             height: 100%;
             border-radius: 3px;
-            transition: width 0.5s ease;
+            transition: width 1s ease-out;
         }
 
-        .mono {
-            font-family: 'SF Mono', 'Fira Code', monospace;
-            font-size: 12px;
-            color: var(--text-secondary);
-        }
-
+        /* --- Empty State --- */
         .empty-state {
             text-align: center;
-            padding: 80px 20px;
-            color: var(--text-muted);
+            padding: 100px 20px;
+            background: var(--bg-surface);
+            border: 1px dashed var(--border-hover);
+            border-radius: var(--radius-lg);
+            margin-top: 40px;
+        }
+
+        .empty-icon {
+            font-size: 48px;
+            margin-bottom: 16px;
+            opacity: 0.5;
         }
 
         .empty-state h2 {
             font-size: 20px;
-            color: var(--text-secondary);
+            color: var(--text-heading);
             margin-bottom: 8px;
         }
 
         .empty-state p {
+            color: var(--text-muted);
+            margin-bottom: 24px;
+        }
+
+        .code-block {
+            display: inline-block;
+            background: var(--bg-base);
+            padding: 12px 24px;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border-color);
+            font-family: var(--font-mono);
+            color: var(--brand-primary);
             font-size: 14px;
         }
 
-        .empty-state code {
-            display: inline-block;
-            margin-top: 16px;
-            padding: 10px 20px;
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            font-family: 'SF Mono', monospace;
-            font-size: 13px;
-            color: var(--accent-blue);
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
-        @media (max-width: 768px) {
+        @keyframes pulse-success {
+            0% {
+                box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.4);
+            }
+
+            70% {
+                box-shadow: 0 0 0 6px rgba(34, 197, 94, 0);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(34, 197, 94, 0);
+            }
+        }
+
+        @keyframes pulse-error {
+            0% {
+                box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4);
+            }
+
+            70% {
+                box-shadow: 0 0 0 6px rgba(239, 68, 68, 0);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(239, 68, 68, 0);
+            }
+        }
+
+        @media (max-width: 1024px) {
             .stats-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
 
-            .charts-row {
+            .charts-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .stats-grid {
                 grid-template-columns: 1fr;
             }
 
             .header {
                 flex-direction: column;
-                gap: 16px;
                 align-items: flex-start;
+                gap: 20px;
+            }
+
+            .toolbar {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 16px;
+            }
+
+            .metrics-summary {
+                display: none;
             }
         }
     </style>
@@ -342,234 +601,409 @@
 <body>
     <div class="container" id="app">
         <div class="empty-state" id="empty-state">
-            <h2>No test runs recorded yet</h2>
-            <p>Run your test suite to start tracking results</p>
-            <code>./run_tests.sh</code>
+            <div class="empty-icon">📊</div>
+            <h2>No test data found</h2>
+            <p>Run your test suite locally or trigger a CI pipeline to generate results.</p>
+            <div class="code-block">./run_tests.sh</div>
         </div>
     </div>
 
+    <!-- Data Injection -->
     <script>
         // Data is injected here by collect_results.py after each run
         // DO NOT EDIT THIS LINE — it is auto-replaced
-        window.__RUN_DATA__ = [{"total": 3, "passed": 3, "failed": 0, "broken": 0, "skipped": 0, "pass_rate": 100.0, "duration_s": 3.0, "timestamp": "2026-02-23T06:22:38.544168", "run_id": "20260223_062238", "tags_filter": "smoke"}, {"total": 3, "passed": 3, "failed": 0, "broken": 0, "skipped": 0, "pass_rate": 100.0, "duration_s": 3.0, "timestamp": "2026-02-23T06:55:47.449517", "run_id": "20260223_065547", "tags_filter": "smoke"}, {"total": 3, "passed": 3, "failed": 0, "broken": 0, "skipped": 0, "pass_rate": 100.0, "duration_s": 3.1, "timestamp": "2026-02-23T07:41:08.522080", "run_id": "20260223_074108", "tags_filter": "smoke"}, {"total": 42, "passed": 42, "failed": 0, "broken": 0, "skipped": 0, "pass_rate": 100.0, "duration_s": 54.2, "timestamp": "2026-02-23T03:22:44.567179", "run_id": "20260223_032244", "tags_filter": ""}, {"total": 3, "passed": 3, "failed": 0, "broken": 0, "skipped": 0, "pass_rate": 100.0, "duration_s": 3.0, "timestamp": "2026-02-23T11:38:13.292028", "run_id": "20260223_113813", "tags_filter": "smoke"}, {"total": 14, "passed": 14, "failed": 0, "broken": 0, "skipped": 0, "pass_rate": 100.0, "duration_s": 13.2, "timestamp": "2026-02-23T11:38:13.324075", "run_id": "20260223_113813", "tags_filter": "sanity"}];
+        window.__RUN_DATA__ = [{ "total": 3, "passed": 3, "failed": 0, "broken": 0, "skipped": 0, "pass_rate": 100.0, "duration_s": 3.0, "timestamp": "2026-02-23T06:22:38.544168", "run_id": "20260223_062238", "tags_filter": "smoke" }, { "total": 3, "passed": 3, "failed": 0, "broken": 0, "skipped": 0, "pass_rate": 100.0, "duration_s": 3.0, "timestamp": "2026-02-23T06:55:47.449517", "run_id": "20260223_065547", "tags_filter": "smoke" }, { "total": 3, "passed": 3, "failed": 0, "broken": 0, "skipped": 0, "pass_rate": 100.0, "duration_s": 3.1, "timestamp": "2026-02-23T07:41:08.522080", "run_id": "20260223_074108", "tags_filter": "smoke" }, { "total": 42, "passed": 42, "failed": 0, "broken": 0, "skipped": 0, "pass_rate": 100.0, "duration_s": 54.2, "timestamp": "2026-02-23T03:22:44.567179", "run_id": "20260223_032244", "tags_filter": "" }, { "total": 3, "passed": 3, "failed": 0, "broken": 0, "skipped": 0, "pass_rate": 100.0, "duration_s": 3.0, "timestamp": "2026-02-23T11:38:13.292028", "run_id": "20260223_113813", "tags_filter": "smoke" }, { "total": 14, "passed": 14, "failed": 0, "broken": 0, "skipped": 0, "pass_rate": 100.0, "duration_s": 13.2, "timestamp": "2026-02-23T11:38:13.324075", "run_id": "20260223_113813", "tags_filter": "sanity" }];
     </script>
+
     <script>
-        async function loadData() {
+        // --- Core Formatting Utils ---
+        const formatters = {
+            date: (isoStr) => {
+                const d = new Date(isoStr);
+                return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+            },
+            time: (isoStr) => {
+                const d = new Date(isoStr);
+                return d.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+            },
+            duration: (seconds) => {
+                if (seconds < 60) return `${seconds.toFixed(1)}s`;
+                const m = Math.floor(seconds / 60);
+                const s = (seconds % 60).toFixed(0);
+                return `${m}m ${s}s`;
+            }
+        };
+
+        // --- State Management ---
+        let allRuns = [];
+        let filteredRuns = [];
+        let trendChartInstance = null;
+        let distChartInstance = null;
+
+        Chart.defaults.color = '#8b8b93';
+        Chart.defaults.font.family = "'Plus Jakarta Sans', sans-serif";
+
+        async function init() {
             let data = window.__RUN_DATA__;
 
-            // Fallback: try fetching if no embedded data
             if (!data || data.length === 0) {
                 try {
                     const response = await fetch('run_history.json');
                     if (response.ok) data = await response.json();
-                } catch (e) { /* ignore */ }
+                } catch (e) {
+                    console.log("Could not fetch run_history.json remotely.");
+                }
             }
 
             if (!data || data.length === 0) return;
+
             document.getElementById('empty-state').style.display = 'none';
-            renderDashboard(data);
+            allRuns = data;
+            filteredRuns = [...allRuns];
+
+            renderDashboard();
+            setupEventListeners();
         }
 
-        function formatDate(isoStr) {
-            const d = new Date(isoStr);
-            return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) +
-                ' ' + d.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
-        }
+        function calculateMetrics(runs) {
+            if (runs.length === 0) return null;
 
-        function formatDuration(seconds) {
-            if (seconds < 60) return seconds.toFixed(1) + 's';
-            const m = Math.floor(seconds / 60);
-            const s = (seconds % 60).toFixed(0);
-            return `${m}m ${s}s`;
-        }
-
-        function renderDashboard(runs) {
-            const app = document.getElementById('app');
             const latest = runs[runs.length - 1];
-            const totalRuns = runs.length;
-            const allPassing = latest.failed === 0;
-            const avgDuration = (runs.reduce((s, r) => s + r.duration_s, 0) / runs.length).toFixed(1);
-            const avgPassRate = (runs.reduce((s, r) => s + r.pass_rate, 0) / runs.length).toFixed(1);
+            const previous = runs.length > 1 ? runs[runs.length - 2] : null;
+
+            const avgDuration = (runs.reduce((s, r) => s + r.duration_s, 0) / runs.length);
+            const overallPassRate = (runs.reduce((s, r) => s + (r.passed / Math.max(r.total, 1)) * 100, 0) / runs.length);
+
+            // Calculate trends vs previous
+            const rateDiff = previous ? (latest.pass_rate - previous.pass_rate).toFixed(1) : 0;
+            const durDiff = previous ? (latest.duration_s - previous.duration_s).toFixed(1) : 0;
+
+            return {
+                latest, total: runs.length, avgDuration, overallPassRate, rateDiff, durDiff
+            };
+        }
+
+        function renderDashboard() {
+            const app = document.getElementById('app');
+            const metrics = calculateMetrics(filteredRuns);
+
+            if (!metrics) {
+                app.innerHTML = `<div class="empty-state"><h2>No runs match this filter</h2></div>`;
+                return;
+            }
+
+            // Extract unique tags for filter
+            const tags = ['All Suites', ...new Set(allRuns.map(r => r.tags_filter).filter(t => t))];
+            const isPassing = metrics.latest.failed === 0;
 
             app.innerHTML = `
-                <div class="header">
+                <header class="header">
                     <div class="header-left">
-                        <div class="logo">T</div>
-                        <h1>Test Dashboard <span>— Testify Automation</span></h1>
+                        <div class="logo">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                        </div>
+                        <div class="title-group">
+                            <h1>Quality Dashboard</h1>
+                            <p>Testify Automation Framework</p>
+                        </div>
                     </div>
                     <div class="header-right">
-                        <span class="badge ${allPassing ? 'badge-green' : 'badge-red'}">
-                            ${allPassing ? '● ALL PASSING' : '● FAILURES DETECTED'}
-                        </span>
-                        <a href="catalog.html" style="background: var(--bg-card); border: 1px solid var(--border); color: var(--accent-blue); padding: 8px 16px; border-radius: 8px; font-size: 13px; font-family: inherit; text-decoration: none; transition: all 0.2s;">📋 Test Catalog</a>
-                        <button class="refresh-btn" onclick="location.reload()">↻ Refresh</button>
+                        <div class="badge ${isPassing ? 'badge-success' : 'badge-error'}">
+                            <div class="dot ${isPassing ? 'pulse-success' : 'pulse-error'}"></div>
+                            ${isPassing ? 'SYSTEM STABLE' : 'FAILURES DETECTED'}
+                        </div>
+                        <a href="catalog.html" class="btn">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+                            Test Catalog
+                        </a>
+                        <a href="allure-report/index.html" class="btn btn-primary" target="_blank">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                            Allure Report
+                        </a>
+                    </div>
+                </header>
+
+                <div class="toolbar">
+                    <div class="filters">
+                        <select id="suiteFilter" class="filter-select">
+                            ${tags.map(t => `<option value="${t}">${t || 'Full Regression'}</option>`).join('')}
+                        </select>
+                    </div>
+                    <div class="metrics-summary cell-mono">
+                        Showing ${filteredRuns.length} run${filteredRuns.length !== 1 ? 's' : ''}
                     </div>
                 </div>
 
                 <div class="stats-grid">
-                    <div class="stat-card">
-                        <div class="stat-label">Total Runs</div>
-                        <div class="stat-value stat-blue">${totalRuns}</div>
-                        <div class="stat-sub">All time</div>
+                    <div class="stat-card" style="--card-accent: var(--brand-primary)">
+                        <div class="stat-header">
+                            <span class="stat-label">Total Executions</span>
+                            <div class="stat-icon">🏃</div>
+                        </div>
+                        <div class="stat-value">${metrics.total}</div>
+                        <div class="stat-sub">Recorded in history</div>
                     </div>
-                    <div class="stat-card">
-                        <div class="stat-label">Latest Pass Rate</div>
-                        <div class="stat-value ${latest.pass_rate === 100 ? 'stat-green' : 'stat-red'}">${latest.pass_rate}%</div>
-                        <div class="stat-sub">${latest.passed}/${latest.total} scenarios</div>
+                    
+                    <div class="stat-card" style="--card-accent: ${metrics.latest.pass_rate === 100 ? 'var(--status-success)' : 'var(--status-error)'}">
+                        <div class="stat-header">
+                            <span class="stat-label">Latest Pass Rate</span>
+                            <div class="stat-icon">🎯</div>
+                        </div>
+                        <div class="stat-value" style="color: ${metrics.latest.pass_rate === 100 ? 'var(--status-success)' : 'var(--status-error)'}">${metrics.latest.pass_rate}%</div>
+                        <div class="stat-sub">
+                            ${metrics.rateDiff != 0 ?
+                    `<span class="metric-trend ${metrics.rateDiff > 0 ? 'trend-up' : 'trend-down'}">${metrics.rateDiff > 0 ? '↑' : '↓'} ${Math.abs(metrics.rateDiff)}%</span> vs previous` :
+                    '<span class="metric-trend trend-neutral">-</span> No change vs previous'}
+                        </div>
                     </div>
-                    <div class="stat-card">
-                        <div class="stat-label">Avg Pass Rate</div>
-                        <div class="stat-value stat-yellow">${avgPassRate}%</div>
-                        <div class="stat-sub">Across all runs</div>
+
+                    <div class="stat-card" style="--card-accent: var(--status-info)">
+                        <div class="stat-header">
+                            <span class="stat-label">Overall Health</span>
+                            <div class="stat-icon">❤️‍🩹</div>
+                        </div>
+                        <div class="stat-value">${metrics.overallPassRate.toFixed(1)}%</div>
+                        <div class="stat-sub">Historical avg pass rate</div>
                     </div>
-                    <div class="stat-card">
-                        <div class="stat-label">Avg Duration</div>
-                        <div class="stat-value" style="color: var(--accent-purple)">${formatDuration(parseFloat(avgDuration))}</div>
-                        <div class="stat-sub">Per run</div>
+
+                    <div class="stat-card" style="--card-accent: var(--brand-secondary)">
+                        <div class="stat-header">
+                            <span class="stat-label">Avg Duration</span>
+                            <div class="stat-icon">⏱️</div>
+                        </div>
+                        <div class="stat-value">${formatters.duration(metrics.avgDuration)}</div>
+                        <div class="stat-sub">
+                             ${metrics.durDiff != 0 ?
+                    `<span class="metric-trend ${metrics.durDiff < 0 ? 'trend-up' : 'trend-down'}">${metrics.durDiff > 0 ? '↑' : '↓'} ${Math.abs(metrics.durDiff)}s</span> vs previous` :
+                    'No significant change'}
+                        </div>
                     </div>
                 </div>
 
-                <div class="charts-row">
+                <div class="charts-grid">
                     <div class="card">
-                        <div class="card-title"><span class="icon">📈</span> Pass Rate Trend</div>
-                        <canvas id="trendChart" height="90"></canvas>
+                        <div class="card-header">
+                            <div class="card-title">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+                                Pass Rate Trend
+                            </div>
+                        </div>
+                        <div class="chart-container" style="height: 250px;">
+                            <canvas id="trendChart"></canvas>
+                        </div>
                     </div>
                     <div class="card">
-                        <div class="card-title"><span class="icon">🎯</span> Latest Breakdown</div>
-                        <canvas id="donutChart" height="180"></canvas>
+                        <div class="card-header">
+                            <div class="card-title">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"></path><path d="M22 12A10 10 0 0 0 12 2v10z"></path></svg>
+                                Latest Breakdown
+                            </div>
+                        </div>
+                        <div class="chart-container" style="height: 250px; display: flex; justify-content: center;">
+                            <canvas id="distChart"></canvas>
+                        </div>
                     </div>
                 </div>
 
-                <div class="card">
-                    <div class="card-title"><span class="icon">📋</span> Run History</div>
+                <div class="card table-wrapper">
+                    <div class="card-header">
+                        <div class="card-title">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+                            Recent Executions
+                        </div>
+                    </div>
                     <div class="table-container">
                         <table>
                             <thead>
                                 <tr>
-                                    <th>Run</th>
-                                    <th>Date & Time</th>
+                                    <th>Run ID / Suite</th>
+                                    <th>Date</th>
+                                    <th>Time</th>
                                     <th>Status</th>
-                                    <th>Pass Rate</th>
-                                    <th>Passed</th>
-                                    <th>Failed</th>
-                                    <th>Total</th>
+                                    <th>Score</th>
+                                    <th>Tests</th>
                                     <th>Duration</th>
-                                    <th>Filter</th>
                                 </tr>
                             </thead>
-                            <tbody id="historyBody"></tbody>
+                            <tbody>
+                                ${[...filteredRuns].reverse().slice(0, 50).map((run, i) => {
+                        const isPass = run.failed === 0;
+                        const suiteTag = run.tags_filter ? run.tags_filter : 'regression';
+                        const color = isPass ? 'var(--status-success)' : 'var(--status-error)';
+
+                        return `
+                                    <tr>
+                                        <td>
+                                            <div style="margin-bottom: 4px"><a href="#" class="run-id">#${run.run_id}</a></div>
+                                            <span class="tag-capsule">@${suiteTag}</span>
+                                        </td>
+                                        <td class="cell-mono">${formatters.date(run.timestamp)}</td>
+                                        <td class="cell-mono">${formatters.time(run.timestamp)}</td>
+                                        <td>
+                                            <div class="status-cell">
+                                                <div class="dot" style="background: ${color}"></div>
+                                                <span class="status-text ${isPass ? 'pass' : 'fail'}">${isPass ? 'Passed' : 'Failed'}</span>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="progress-container">
+                                                <span style="font-weight: 600; width: 45px">${run.pass_rate.toFixed(1)}%</span>
+                                                <div class="progress-track">
+                                                    <div class="progress-fill" style="width: ${run.pass_rate}%; background: ${color}"></div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div style="display: flex; gap: 12px; font-size: 13px;">
+                                                <span style="color: var(--status-success)">✔ ${run.passed}</span>
+                                                ${run.failed > 0 ? `<span style="color: var(--status-error)">✖ ${run.failed}</span>` : ''}
+                                                <span style="color: var(--text-muted)">Σ ${run.total}</span>
+                                            </div>
+                                        </td>
+                                        <td class="cell-mono">${formatters.duration(run.duration_s)}</td>
+                                    </tr>`
+                    }).join('')}
+                            </tbody>
                         </table>
                     </div>
                 </div>
             `;
 
-            // Render table rows (newest first)
-            const tbody = document.getElementById('historyBody');
-            [...runs].reverse().forEach((run, i) => {
-                const runNum = runs.length - i;
-                const allPass = run.failed === 0;
-                const color = allPass ? 'var(--accent-green)' : 'var(--accent-red)';
-                tbody.innerHTML += `
-                    <tr>
-                        <td class="mono">#${runNum}</td>
-                        <td>${formatDate(run.timestamp)}</td>
-                        <td>
-                            <span class="status-dot ${allPass ? 'pass' : 'fail'}"></span>
-                            ${allPass ? 'Passed' : 'Failed'}
-                        </td>
-                        <td>
-                            <span class="progress-bar">
-                                <span class="progress-fill" style="width: ${run.pass_rate}%; background: ${color};"></span>
-                            </span>
-                            ${run.pass_rate}%
-                        </td>
-                        <td class="stat-green">${run.passed}</td>
-                        <td class="${run.failed > 0 ? 'stat-red' : ''}">${run.failed}</td>
-                        <td>${run.total}</td>
-                        <td class="mono">${formatDuration(run.duration_s)}</td>
-                        <td class="mono">${run.tags_filter || 'all'}</td>
-                    </tr>
-                `;
-            });
+            renderCharts(metrics.latest);
+
+            // Re-apply filter value
+            const select = document.getElementById('suiteFilter');
+            const currentFilterUrl = new URL(window.location).searchParams.get('suite');
+            if (currentFilterUrl && select.querySelector(`option[value="${currentFilterUrl}"]`)) {
+                select.value = currentFilterUrl;
+            }
+        }
+
+        function renderCharts(latest) {
+            if (trendChartInstance) trendChartInstance.destroy();
+            if (distChartInstance) distChartInstance.destroy();
+
+            const sliceLimit = 30; // Max points
+            const chartData = filteredRuns.slice(-sliceLimit);
 
             // Trend Chart
-            const labels = runs.map((r, i) => `#${i + 1}`);
-            new Chart(document.getElementById('trendChart'), {
+            const ctxTrend = document.getElementById('trendChart').getContext('2d');
+
+            // Gradient for area under curve
+            const gradient = ctxTrend.createLinearGradient(0, 0, 0, 250);
+            gradient.addColorStop(0, 'rgba(99, 102, 241, 0.25)'); // var(--brand-primary)
+            gradient.addColorStop(1, 'rgba(99, 102, 241, 0.01)');
+
+            trendChartInstance = new Chart(ctxTrend, {
                 type: 'line',
                 data: {
-                    labels,
+                    labels: chartData.map(r => formatters.date(r.timestamp)),
                     datasets: [
                         {
-                            label: 'Pass Rate %',
-                            data: runs.map(r => r.pass_rate),
-                            borderColor: '#34d399',
-                            backgroundColor: 'rgba(52, 211, 153, 0.08)',
-                            fill: true,
-                            tension: 0.3,
-                            pointRadius: 5,
-                            pointBackgroundColor: '#34d399',
+                            label: 'Pass Rate (%)',
+                            data: chartData.map(r => r.pass_rate),
+                            borderColor: '#6366f1',
+                            backgroundColor: gradient,
                             borderWidth: 2,
+                            tension: 0.4,
+                            fill: true,
+                            pointRadius: 4,
+                            pointBackgroundColor: '#121214',
+                            pointBorderColor: '#6366f1',
+                            pointHoverRadius: 6,
+                            pointHoverBackgroundColor: '#6366f1',
+                            yAxisID: 'y'
                         },
                         {
                             label: 'Duration (s)',
-                            data: runs.map(r => r.duration_s),
-                            borderColor: '#a78bfa',
-                            borderDash: [4, 4],
+                            data: chartData.map(r => r.duration_s),
+                            borderColor: '#52525b',
+                            borderWidth: 2,
+                            borderDash: [5, 5],
                             tension: 0.3,
-                            pointRadius: 4,
-                            pointBackgroundColor: '#a78bfa',
-                            borderWidth: 1.5,
-                            yAxisID: 'y1',
+                            pointRadius: 0,
+                            pointHoverRadius: 5,
+                            pointHoverBackgroundColor: '#e5e5e5',
+                            yAxisID: 'y1'
                         }
                     ]
                 },
                 options: {
                     responsive: true,
+                    maintainAspectRatio: false,
+                    interaction: { mode: 'index', intersect: false },
                     plugins: {
-                        legend: { labels: { color: '#9aa0ac', font: { size: 11 } } }
+                        legend: { position: 'top', align: 'end', labels: { usePointStyle: true, boxWidth: 6, font: { size: 12 } } },
+                        tooltip: { backgroundColor: '#232326', titleColor: '#f9f9f9', bodyColor: '#e5e5e5', padding: 12, cornerRadius: 8, borderColor: '#3f3f46', borderWidth: 1 }
                     },
                     scales: {
-                        x: { ticks: { color: '#6b7280' }, grid: { color: '#2d3144' } },
-                        y: {
-                            min: 0, max: 100,
-                            ticks: { color: '#6b7280', callback: v => v + '%' },
-                            grid: { color: '#2d3144' }
-                        },
-                        y1: {
-                            position: 'right',
-                            ticks: { color: '#6b7280', callback: v => v + 's' },
-                            grid: { display: false }
-                        }
+                        x: { display: false },
+                        y: { min: 0, max: 100, grid: { color: '#27272a' }, border: { display: false }, ticks: { callback: v => v + '%' } },
+                        y1: { position: 'right', grid: { display: false }, border: { display: false }, ticks: { callback: v => v + 's' } }
                     }
                 }
             });
 
-            // Donut Chart
-            new Chart(document.getElementById('donutChart'), {
+            // Dist Chart
+            const ctxDist = document.getElementById('distChart').getContext('2d');
+            distChartInstance = new Chart(ctxDist, {
                 type: 'doughnut',
                 data: {
                     labels: ['Passed', 'Failed', 'Broken', 'Skipped'],
                     datasets: [{
                         data: [latest.passed, latest.failed, latest.broken, latest.skipped],
-                        backgroundColor: ['#34d399', '#f87171', '#fbbf24', '#6b7280'],
+                        backgroundColor: ['#22c55e', '#ef4444', '#eab308', '#52525b'],
                         borderWidth: 0,
-                        hoverOffset: 6
+                        hoverOffset: 8
                     }]
                 },
                 options: {
                     responsive: true,
-                    cutout: '65%',
+                    maintainAspectRatio: false,
+                    cutout: '70%',
                     plugins: {
-                        legend: {
-                            position: 'bottom',
-                            labels: { color: '#9aa0ac', font: { size: 11 }, padding: 16 }
-                        }
+                        legend: { position: 'right', labels: { usePointStyle: true, padding: 20, font: { size: 13 } } },
+                        tooltip: { backgroundColor: '#232326', padding: 12, cornerRadius: 8 }
                     }
                 }
             });
         }
 
-        loadData();
+        function setupEventListeners() {
+            // Because innerHTML replaces content, we delegate or reattach within render
+            document.getElementById('app').addEventListener('change', (e) => {
+                if (e.target.id === 'suiteFilter') {
+                    const val = e.target.value;
+                    const url = new URL(window.location);
+
+                    if (val === 'All Suites') {
+                        filteredRuns = [...allRuns];
+                        url.searchParams.delete('suite');
+                    } else {
+                        filteredRuns = allRuns.filter(r => r.tags_filter === val);
+                        url.searchParams.set('suite', val);
+                    }
+
+                    // Update URL silently
+                    window.history.pushState({}, '', url);
+                    renderDashboard();
+                }
+            });
+        }
+
+        // Handle browser back/forward correctly
+        window.addEventListener('popstate', () => {
+            const val = new URL(window.location).searchParams.get('suite');
+            if (val) {
+                filteredRuns = allRuns.filter(r => r.tags_filter === val);
+            } else {
+                filteredRuns = [...allRuns];
+            }
+            renderDashboard();
+        });
+
+        // Start App
+        document.addEventListener('DOMContentLoaded', init);
     </script>
 </body>
 
