@@ -295,3 +295,38 @@ jobs:
 
       - name: Save Dashboard
         uses: ./.github/actions/save-dashboard
+
+  # Deploy Dashboard to GitHub Pages
+  deploy-pages:
+    needs: report
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Checkout main branch
+        uses: actions/checkout@v4
+        with:
+          ref: main # Ensure we deploy the latest committed dashboard from the report job
+      
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Prepare Dashboard for Pages
+        run: |
+          # Copy dashboard.html to index.html so it loads by default
+          cp reports/dashboard.html reports/index.html
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: './reports'
+          
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
