@@ -3,10 +3,16 @@ description: "Sets up Python dependencies inside a Playwright container"
 runs:
   using: "composite"
   steps:
-    - name: Verify System Python
+    - name: Ensure Python 3 and Pip are Installed
       shell: bash
       run: |
-        python3 --version || (apt-get update && apt-get install -y python3 python3-pip)
+        if ! command -v python3 &> /dev/null || ! python3 -m pip --version &> /dev/null; then
+          echo "Installing Python3 and pip..."
+          sudo apt-get update
+          sudo apt-get install -y python3 python3-pip
+        else
+          echo "Python3 and pip are already installed."
+        fi
 
     - name: Install Python dependencies
       shell: bash
