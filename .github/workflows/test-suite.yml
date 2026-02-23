@@ -52,15 +52,15 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Set up Environment
-        uses: ./.github/actions/setup-testify
+      - name: Set up Environment (Container)
+        uses: ./.github/actions/setup-testify-container
 
       - name: Run Smoke Tests
-        run: python -m behave --no-capture --tags=@smoke
+        run: python3 -m behave --no-capture --tags=@smoke
 
       - name: Collect results
         if: always()
-        run: python collect_results.py smoke
+        run: python3 collect_results.py smoke
 
       - name: Upload test reports
         if: always()
@@ -83,15 +83,15 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Set up Environment
-        uses: ./.github/actions/setup-testify
+      - name: Set up Environment (Container)
+        uses: ./.github/actions/setup-testify-container
 
       - name: Run Sanity Tests
-        run: python -m behave --no-capture --tags=@sanity
+        run: python3 -m behave --no-capture --tags=@sanity
 
       - name: Collect results
         if: always()
-        run: python collect_results.py sanity
+        run: python3 collect_results.py sanity
 
       - name: Upload test reports
         if: always()
@@ -114,8 +114,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Set up Environment
-        uses: ./.github/actions/setup-testify
+      - name: Set up Environment (Container)
+        uses: ./.github/actions/setup-testify-container
 
       - name: Install Allure
         run: |
@@ -125,11 +125,11 @@ jobs:
           echo "$PWD/allure-2.27.0/bin" >> $GITHUB_PATH
 
       - name: Run Full Regression
-        run: python -m behave --no-capture
+        run: python3 -m behave --no-capture
 
       - name: Collect results
         if: always()
-        run: python collect_results.py
+        run: python3 collect_results.py
 
       - name: Generate Allure report
         if: always()
@@ -157,15 +157,15 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Set up Environment
-        uses: ./.github/actions/setup-testify
+      - name: Set up Environment (Container)
+        uses: ./.github/actions/setup-testify-container
 
       - name: Run Accessibility Tests
-        run: python -m behave --no-capture features/accessibility.feature
+        run: python3 -m behave --no-capture features/accessibility.feature
 
       - name: Collect results
         if: always()
-        run: python collect_results.py accessibility
+        run: python3 collect_results.py accessibility
 
       - name: Upload test reports
         if: always()
@@ -188,15 +188,15 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Set up Environment
-        uses: ./.github/actions/setup-testify
+      - name: Set up Environment (Container)
+        uses: ./.github/actions/setup-testify-container
 
       - name: Run Performance Tests
-        run: python -m behave --no-capture features/performance.feature
+        run: python3 -m behave --no-capture features/performance.feature
 
       - name: Collect results
         if: always()
-        run: python collect_results.py performance
+        run: python3 collect_results.py performance
 
       - name: Upload test reports
         if: always()
