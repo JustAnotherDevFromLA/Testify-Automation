@@ -30,5 +30,37 @@
     "timestamp": "2026-02-23T06:22:38.544168",
     "run_id": "20260223_062238",
     "tags_filter": "smoke"
+  },
+  {
+    "total": 3,
+    "passed": 3,
+    "failed": 0,
+    "broken": 0,
+    "skipped": 0,
+    "pass_rate": 100.0,
+    "duration_s": 3.0,
+    "scenarios": [
+      {
+        "name": "TC-001 - Page Title verification",
+        "status": "passed",
+        "duration_ms": 1058,
+        "tags": "smoke"
+      },
+      {
+        "name": "TC-006 - Contact form fields are present",
+        "status": "passed",
+        "duration_ms": 986,
+        "tags": "smoke"
+      },
+      {
+        "name": "TC-005 - Hero section CTA works",
+        "status": "passed",
+        "duration_ms": 970,
+        "tags": "ui"
+      }
+    ],
+    "timestamp": "2026-02-23T06:55:47.449517",
+    "run_id": "20260223_065547",
+    "tags_filter": "smoke"
   }
 ]
