@@ -337,6 +337,57 @@ jobs:
     if: always() && contains(needs.*.result, 'failure')
     runs-on: ubuntu-latest
     steps:
+      - name: Download All Artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+          merge-multiple: true
+
+      - name: Prepare Email Content and Attachments
+        id: prepare_email
+        run: |
+          # 1. Prepare attachments dir
+          mkdir -p email_attachments
+          
+          # Find all screenshots from any downloaded artifact folder and copy them
+          find artifacts -type f -name "*.png" -exec cp {} email_attachments/ \;
+          
+          # Check if we found any
+          if [ "$(ls -A email_attachments)" ]; then
+            echo "has_attachments=true" >> "$GITHUB_OUTPUT"
+            echo "Found screenshots attached to failures."
+          else
+            echo "has_attachments=false" >> "$GITHUB_OUTPUT"
+            echo "No screenshots found."
+          fi
+          
+          # 2. Generate Email Body
+          cat <<EOF > email_body.txt
+          The Testify Automation pipeline just encountered a failure!
+          
+          =========================================
+          RUN DETAILS
+          =========================================
+          Repository: ${{ github.repository }}
+          Branch: ${{ github.ref_name }}
+          Commit: ${{ github.sha }}
+          Run URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          
+          =========================================
+          JOB STATUS SUMMARY
+          =========================================
+          - Quality Gates: ${{ needs.quality.result }}
+          - Smoke Tests: ${{ needs.smoke.result }}
+          - Sanity Tests: ${{ needs.sanity.result }}
+          - Regression Tests: ${{ needs.regression.result }}
+          - Accessibility Tests: ${{ needs.accessibility.result }}
+          - Performance Tests: ${{ needs.performance.result }}
+          - Report Aggregation: ${{ needs.report.result }}
+          - Dashboard Deployment: ${{ needs.deploy-pages.result }}
+          
+          Please check the GitHub Actions logs via the run URL to investigate the issue.
+          EOF
+
       - name: Send Email Notification
         uses: dawidd6/action-send-mail@v3
         with:
@@ -347,12 +398,5 @@ jobs:
           subject: "🚨 Testify CI Pipeline Failed: ${{ github.repository }} (#${{ github.run_number }})"
           to: artasheskocharyan@gmail.com
           from: "Testify Automation CI"
-          body: |
-            The Testify Automation pipeline just encountered a failure!
-            
-            Repository: ${{ github.repository }}
-            Branch: ${{ github.ref_name }}
-            Commit: ${{ github.sha }}
-            Run URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
-            
-            Please check the GitHub Actions logs via the link above to investigate the issue.
+          body: file://email_body.txt
+          attachments: ${{ steps.prepare_email.outputs.has_attachments == 'true' && 'email_attachments/*.png' || '' }}
