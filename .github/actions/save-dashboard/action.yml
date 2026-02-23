@@ -16,7 +16,10 @@ runs:
         # Only commit if there are changes
         if ! git diff --staged --quiet; then
           git commit -m "chore(ci): update test dashboard [skip ci]"
-          git push
+          
+          # Rebase on latest main to avoid fast-forward errors (concurrency fix)
+          git pull --rebase origin main
+          git push origin HEAD:main
         else
           echo "No changes to dashboard."
         fi
