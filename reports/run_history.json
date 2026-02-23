@@ -490,5 +490,135 @@
     "timestamp": "2026-02-23T11:38:13.324075",
     "run_id": "20260223_113813",
     "tags_filter": "sanity"
+  },
+  {
+    "total": 3,
+    "passed": 3,
+    "failed": 0,
+    "broken": 0,
+    "skipped": 0,
+    "pass_rate": 100.0,
+    "duration_s": 3.0,
+    "scenarios": [
+      {
+        "name": "TC-005 - Hero section CTA works",
+        "status": "passed",
+        "duration_ms": 986,
+        "tags": "ui"
+      },
+      {
+        "name": "TC-006 - Contact form fields are present",
+        "status": "passed",
+        "duration_ms": 1001,
+        "tags": "smoke"
+      },
+      {
+        "name": "TC-001 - Page Title verification",
+        "status": "passed",
+        "duration_ms": 1040,
+        "tags": "smoke"
+      }
+    ],
+    "timestamp": "2026-02-23T11:48:06.915944",
+    "run_id": "20260223_114806",
+    "tags_filter": "smoke"
+  },
+  {
+    "total": 14,
+    "passed": 14,
+    "failed": 0,
+    "broken": 0,
+    "skipped": 0,
+    "pass_rate": 100.0,
+    "duration_s": 13.3,
+    "scenarios": [
+      {
+        "name": "TC-004 - Key content is present in Resume section",
+        "status": "passed",
+        "duration_ms": 930,
+        "tags": "ui"
+      },
+      {
+        "name": "TC-002 - Navigation to Resume works -- @1.3 ",
+        "status": "passed",
+        "duration_ms": 931,
+        "tags": "sanity"
+      },
+      {
+        "name": "TC-014 - Footer displays copyright",
+        "status": "passed",
+        "duration_ms": 879,
+        "tags": "ui"
+      },
+      {
+        "name": "TC-002 - Navigation to About Me works -- @1.1 ",
+        "status": "passed",
+        "duration_ms": 935,
+        "tags": "sanity"
+      },
+      {
+        "name": "TC-006 - Contact form fields are present",
+        "status": "passed",
+        "duration_ms": 947,
+        "tags": "smoke"
+      },
+      {
+        "name": "TC-009 - Hero section content is displayed",
+        "status": "passed",
+        "duration_ms": 942,
+        "tags": "ui"
+      },
+      {
+        "name": "TC-003 - Twitter social link is correct -- @1.1 ",
+        "status": "passed",
+        "duration_ms": 888,
+        "tags": "sanity"
+      },
+      {
+        "name": "TC-005 - Hero section CTA works",
+        "status": "passed",
+        "duration_ms": 970,
+        "tags": "ui"
+      },
+      {
+        "name": "TC-001 - Page Title verification",
+        "status": "passed",
+        "duration_ms": 1332,
+        "tags": "smoke"
+      },
+      {
+        "name": "TC-002 - Navigation to Portfolio works -- @1.2 ",
+        "status": "passed",
+        "duration_ms": 936,
+        "tags": "sanity"
+      },
+      {
+        "name": "TC-002 - Navigation to Get in Touch works -- @1.4 ",
+        "status": "passed",
+        "duration_ms": 945,
+        "tags": "sanity"
+      },
+      {
+        "name": "TC-017 - Page meta tags are present",
+        "status": "passed",
+        "duration_ms": 880,
+        "tags": "seo"
+      },
+      {
+        "name": "TC-003 - LinkedIn social link is correct -- @1.3 ",
+        "status": "passed",
+        "duration_ms": 895,
+        "tags": "sanity"
+      },
+      {
+        "name": "TC-003 - GitHub social link is correct -- @1.2 ",
+        "status": "passed",
+        "duration_ms": 905,
+        "tags": "sanity"
+      }
+    ],
+    "timestamp": "2026-02-23T11:48:06.964050",
+    "run_id": "20260223_114806",
+    "tags_filter": "sanity"
   }
 ]
