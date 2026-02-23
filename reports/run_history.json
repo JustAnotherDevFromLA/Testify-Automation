@@ -1926,5 +1926,37 @@
     "timestamp": "2026-02-23T13:32:45.224061",
     "run_id": "20260223_133245",
     "tags_filter": "sanity"
+  },
+  {
+    "total": 3,
+    "passed": 2,
+    "failed": 1,
+    "broken": 0,
+    "skipped": 0,
+    "pass_rate": 66.7,
+    "duration_s": 2.7,
+    "scenarios": [
+      {
+        "name": "TC-001 - Page Title verification",
+        "status": "failed",
+        "duration_ms": 1018,
+        "tags": "smoke"
+      },
+      {
+        "name": "TC-006 - Contact form fields are present",
+        "status": "passed",
+        "duration_ms": 839,
+        "tags": "smoke"
+      },
+      {
+        "name": "TC-005 - Hero section CTA works",
+        "status": "passed",
+        "duration_ms": 840,
+        "tags": "ui"
+      }
+    ],
+    "timestamp": "2026-02-23T13:36:17.812334",
+    "run_id": "20260223_133617",
+    "tags_filter": "smoke"
   }
 ]
