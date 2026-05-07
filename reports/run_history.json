@@ -59928,5 +59928,803 @@
     "timestamp": "2026-05-06T05:33:26.565886+00:00",
     "run_id": "20260506_053326",
     "tags_filter": "regression-webkit"
+  },
+  {
+    "total": 42,
+    "passed": 42,
+    "failed": 0,
+    "broken": 0,
+    "skipped": 0,
+    "pass_rate": 100.0,
+    "duration_s": 43.6,
+    "scenarios": [
+      {
+        "name": "TC-022 - Resume PDF iframe has valid source",
+        "status": "passed",
+        "duration_ms": 1049,
+        "tags": "ui"
+      },
+      {
+        "name": "TC-012 - Portfolio item \"BlackJack Game App\" links to GitHub -- @1.4 ",
+        "status": "passed",
+        "duration_ms": 1046,
+        "tags": "regression"
+      },
+      {
+        "name": "TC-A01 - All images have alt text",
+        "status": "passed",
+        "duration_ms": 1652,
+        "tags": "accessibility"
+      },
+      {
+        "name": "TC-A04 - Interactive elements are keyboard accessible",
+        "status": "passed",
+        "duration_ms": 1134,
+        "tags": "accessibility"
+      },
+      {
+        "name": "TC-003 - GitHub social link is correct -- @1.2 ",
+        "status": "passed",
+        "duration_ms": 949,
+        "tags": "sanity"
+      },
+      {
+        "name": "TC-002 - Navigation to Get in Touch works -- @1.4 ",
+        "status": "passed",
+        "duration_ms": 867,
+        "tags": "sanity"
+      },
+      {
+        "name": "TC-012 - Portfolio item \"Cryoto Currency Platform\" links to GitHub -- @1.5 ",
+        "status": "passed",
+        "duration_ms": 1082,
+        "tags": "regression"
+      },
+      {
+        "name": "TC-A02 - Heading hierarchy is correct",
+        "status": "passed",
+        "duration_ms": 845,
+        "tags": "accessibility"
+      },
+      {
+        "name": "TC-009 - Hero section content is displayed",
+        "status": "passed",
+        "duration_ms": 1045,
+        "tags": "ui"
+      },
+      {
+        "name": "TC-010 - About Me section has key content",
+        "status": "passed",
+        "duration_ms": 1000,
+        "tags": "regression"
+      },
+      {
+        "name": "TC-P01 - Page loads within acceptable time",
+        "status": "passed",
+        "duration_ms": 859,
+        "tags": "performance"
+      },
+      {
+        "name": "TC-002 - Navigation to Portfolio works -- @1.2 ",
+        "status": "passed",
+        "duration_ms": 860,
+        "tags": "sanity"
+      },
+      {
+        "name": "TC-014 - Footer displays copyright",
+        "status": "passed",
+        "duration_ms": 974,
+        "tags": "ui"
+      },
+      {
+        "name": "TC-A05 - Color contrast and text readability",
+        "status": "passed",
+        "duration_ms": 992,
+        "tags": "accessibility"
+      },
+      {
+        "name": "TC-021 - Email mailto link is present in sidebar",
+        "status": "passed",
+        "duration_ms": 1025,
+        "tags": "regression"
+      },
+      {
+        "name": "TC-012 - Portfolio item \"Grocery Delivery Web App\" links to GitHub -- @1.3 ",
+        "status": "passed",
+        "duration_ms": 1052,
+        "tags": "regression"
+      },
+      {
+        "name": "TC-019 - Portfolio items have thumbnail images",
+        "status": "passed",
+        "duration_ms": 1073,
+        "tags": "regression"
+      },
+      {
+        "name": "TC-017 - Page meta tags are present",
+        "status": "passed",
+        "duration_ms": 1142,
+        "tags": "seo"
+      },
+      {
+        "name": "TC-012 - Portfolio item \"Process Scheduler Simulator\" links to GitHub -- @1.2 ",
+        "status": "passed",
+        "duration_ms": 999,
+        "tags": "regression"
+      },
+      {
+        "name": "TC-015 - Twitter links to the correct profile -- @1.1 ",
+        "status": "passed",
+        "duration_ms": 1011,
+        "tags": "regression"
+      },
+      {
+        "name": "TC-012 - Portfolio item \"Twitter Bot\" links to GitHub -- @1.1 ",
+        "status": "passed",
+        "duration_ms": 1046,
+        "tags": "regression"
+      },
+      {
+        "name": "TC-004 - Key content is present in Resume section",
+        "status": "passed",
+        "duration_ms": 1031,
+        "tags": "ui"
+      },
+      {
+        "name": "TC-015 - GitHub links to the correct profile -- @1.2 ",
+        "status": "passed",
+        "duration_ms": 976,
+        "tags": "regression"
+      },
+      {
+        "name": "TC-006 - Contact form fields are present",
+        "status": "passed",
+        "duration_ms": 1026,
+        "tags": "smoke"
+      },
+      {
+        "name": "TC-012 - Portfolio item \"Ticket Managment Browser Extension\" links to GitHub -- @1.6 ",
+        "status": "passed",
+        "duration_ms": 1017,
+        "tags": "regression"
+      },
+      {
+        "name": "TC-P03 - Page size is reasonable",
+        "status": "passed",
+        "duration_ms": 1069,
+        "tags": "performance"
+      },
+      {
+        "name": "TC-005 - Hero section CTA works",
+        "status": "passed",
+        "duration_ms": 1056,
+        "tags": "ui"
+      },
+      {
+        "name": "TC-003 - LinkedIn social link is correct -- @1.3 ",
+        "status": "passed",
+        "duration_ms": 1011,
+        "tags": "sanity"
+      },
+      {
+        "name": "TC-A03 - Page has a lang attribute",
+        "status": "passed",
+        "duration_ms": 1004,
+        "tags": "accessibility"
+      },
+      {
+        "name": "TC-011 - All portfolio items are displayed",
+        "status": "passed",
+        "duration_ms": 996,
+        "tags": "regression"
+      },
+      {
+        "name": "TC-P02 - No broken images on the page",
+        "status": "passed",
+        "duration_ms": 994,
+        "tags": "performance"
+      },
+      {
+        "name": "TC-001 - Page Title verification",
+        "status": "passed",
+        "duration_ms": 868,
+        "tags": "smoke"
+      },
+      {
+        "name": "TC-003 - Twitter social link is correct -- @1.1 ",
+        "status": "passed",
+        "duration_ms": 825,
+        "tags": "sanity"
+      },
+      {
+        "name": "TC-008 - Required fields enforce validation",
+        "status": "passed",
+        "duration_ms": 1076,
+        "tags": "validation"
+      },
+      {
+        "name": "TC-007 - User can fill out the contact form",
+        "status": "passed",
+        "duration_ms": 1067,
+        "tags": "regression"
+      },
+      {
+        "name": "TC-015 - LinkedIn links to the correct profile -- @1.3 ",
+        "status": "passed",
+        "duration_ms": 828,
+        "tags": "regression"
+      },
+      {
+        "name": "TC-002 - Navigation to About Me works -- @1.1 ",
+        "status": "passed",
+        "duration_ms": 885,
+        "tags": "sanity"
+      },
+      {
+        "name": "TC-002 - Navigation to Resume works -- @1.3 ",
+        "status": "passed",
+        "duration_ms": 1034,
+        "tags": "sanity"
+      },
+      {
+        "name": "TC-016 - Mobile layout hides sidebar and shows content",
+        "status": "passed",
+        "duration_ms": 1968,
+        "tags": "responsive"
+      },
+      {
+        "name": "TC-020 - Navigation scrolls section into viewport",
+        "status": "passed",
+        "duration_ms": 1010,
+        "tags": "ui"
+      },
+      {
+        "name": "TC-018 - Email field rejects invalid format",
+        "status": "passed",
+        "duration_ms": 1137,
+        "tags": "validation"
+      },
+      {
+        "name": "TC-013 - Resume download link is present",
+        "status": "passed",
+        "duration_ms": 1053,
+        "tags": "ui"
+      }
+    ],
+    "timestamp": "2026-05-07T05:36:23.397746+00:00",
+    "run_id": "20260507_053623",
+    "tags_filter": "regression-chromium"
+  },
+  {
+    "total": 42,
+    "passed": 42,
+    "failed": 0,
+    "broken": 0,
+    "skipped": 0,
+    "pass_rate": 100.0,
+    "duration_s": 52.2,
+    "scenarios": [
+      {
+        "name": "TC-A02 - Heading hierarchy is correct",
+        "status": "passed",
+        "duration_ms": 1106,
+        "tags": "accessibility"
+      },
+      {
+        "name": "TC-021 - Email mailto link is present in sidebar",
+        "status": "passed",
+        "duration_ms": 1114,
+        "tags": "regression"
+      },
+      {
+        "name": "TC-008 - Required fields enforce validation",
+        "status": "passed",
+        "duration_ms": 1242,
+        "tags": "validation"
+      },
+      {
+        "name": "TC-012 - Portfolio item \"Cryoto Currency Platform\" links to GitHub -- @1.5 ",
+        "status": "passed",
+        "duration_ms": 1184,
+        "tags": "regression"
+      },
+      {
+        "name": "TC-015 - LinkedIn links to the correct profile -- @1.3 ",
+        "status": "passed",
+        "duration_ms": 1246,
+        "tags": "regression"
+      },
+      {
+        "name": "TC-A05 - Color contrast and text readability",
+        "status": "passed",
+        "duration_ms": 1037,
+        "tags": "accessibility"
+      },
+      {
+        "name": "TC-020 - Navigation scrolls section into viewport",
+        "status": "passed",
+        "duration_ms": 1192,
+        "tags": "ui"
+      },
+      {
+        "name": "TC-015 - GitHub links to the correct profile -- @1.2 ",
+        "status": "passed",
+        "duration_ms": 1114,
+        "tags": "regression"
+      },
+      {
+        "name": "TC-002 - Navigation to Portfolio works -- @1.2 ",
+        "status": "passed",
+        "duration_ms": 1165,
+        "tags": "sanity"
+      },
+      {
+        "name": "TC-022 - Resume PDF iframe has valid source",
+        "status": "passed",
+        "duration_ms": 1289,
+        "tags": "ui"
+      },
+      {
+        "name": "TC-006 - Contact form fields are present",
+        "status": "passed",
+        "duration_ms": 1168,
+        "tags": "smoke"
+      },
+      {
+        "name": "TC-011 - All portfolio items are displayed",
+        "status": "passed",
+        "duration_ms": 1234,
+        "tags": "regression"
+      },
+      {
+        "name": "TC-004 - Key content is present in Resume section",
+        "status": "passed",
+        "duration_ms": 1153,
+        "tags": "ui"
+      },
+      {
+        "name": "TC-P01 - Page loads within acceptable time",
+        "status": "passed",
+        "duration_ms": 1094,
+        "tags": "performance"
+      },
+      {
+        "name": "TC-005 - Hero section CTA works",
+        "status": "passed",
+        "duration_ms": 1169,
+        "tags": "ui"
+      },
+      {
+        "name": "TC-003 - Twitter social link is correct -- @1.1 ",
+        "status": "passed",
+        "duration_ms": 1135,
+        "tags": "sanity"
+      },
+      {
+        "name": "TC-009 - Hero section content is displayed",
+        "status": "passed",
+        "duration_ms": 1137,
+        "tags": "ui"
+      },
+      {
+        "name": "TC-001 - Page Title verification",
+        "status": "passed",
+        "duration_ms": 1241,
+        "tags": "smoke"
+      },
+      {
+        "name": "TC-018 - Email field rejects invalid format",
+        "status": "passed",
+        "duration_ms": 1490,
+        "tags": "validation"
+      },
+      {
+        "name": "TC-A04 - Interactive elements are keyboard accessible",
+        "status": "passed",
+        "duration_ms": 1110,
+        "tags": "accessibility"
+      },
+      {
+        "name": "TC-A01 - All images have alt text",
+        "status": "passed",
+        "duration_ms": 2462,
+        "tags": "accessibility"
+      },
+      {
+        "name": "TC-012 - Portfolio item \"Ticket Managment Browser Extension\" links to GitHub -- @1.6 ",
+        "status": "passed",
+        "duration_ms": 1169,
+        "tags": "regression"
+      },
+      {
+        "name": "TC-003 - LinkedIn social link is correct -- @1.3 ",
+        "status": "passed",
+        "duration_ms": 1080,
+        "tags": "sanity"
+      },
+      {
+        "name": "TC-002 - Navigation to Get in Touch works -- @1.4 ",
+        "status": "passed",
+        "duration_ms": 1173,
+        "tags": "sanity"
+      },
+      {
+        "name": "TC-017 - Page meta tags are present",
+        "status": "passed",
+        "duration_ms": 1122,
+        "tags": "seo"
+      },
+      {
+        "name": "TC-010 - About Me section has key content",
+        "status": "passed",
+        "duration_ms": 1148,
+        "tags": "regression"
+      },
+      {
+        "name": "TC-014 - Footer displays copyright",
+        "status": "passed",
+        "duration_ms": 1320,
+        "tags": "ui"
+      },
+      {
+        "name": "TC-015 - Twitter links to the correct profile -- @1.1 ",
+        "status": "passed",
+        "duration_ms": 1152,
+        "tags": "regression"
+      },
+      {
+        "name": "TC-007 - User can fill out the contact form",
+        "status": "passed",
+        "duration_ms": 1275,
+        "tags": "regression"
+      },
+      {
+        "name": "TC-002 - Navigation to About Me works -- @1.1 ",
+        "status": "passed",
+        "duration_ms": 1204,
+        "tags": "sanity"
+      },
+      {
+        "name": "TC-016 - Mobile layout hides sidebar and shows content",
+        "status": "passed",
+        "duration_ms": 2561,
+        "tags": "responsive"
+      },
+      {
+        "name": "TC-A03 - Page has a lang attribute",
+        "status": "passed",
+        "duration_ms": 1057,
+        "tags": "accessibility"
+      },
+      {
+        "name": "TC-012 - Portfolio item \"Twitter Bot\" links to GitHub -- @1.1 ",
+        "status": "passed",
+        "duration_ms": 1159,
+        "tags": "regression"
+      },
+      {
+        "name": "TC-P03 - Page size is reasonable",
+        "status": "passed",
+        "duration_ms": 1070,
+        "tags": "performance"
+      },
+      {
+        "name": "TC-012 - Portfolio item \"Grocery Delivery Web App\" links to GitHub -- @1.3 ",
+        "status": "passed",
+        "duration_ms": 1201,
+        "tags": "regression"
+      },
+      {
+        "name": "TC-012 - Portfolio item \"Process Scheduler Simulator\" links to GitHub -- @1.2 ",
+        "status": "passed",
+        "duration_ms": 1197,
+        "tags": "regression"
+      },
+      {
+        "name": "TC-P02 - No broken images on the page",
+        "status": "passed",
+        "duration_ms": 1104,
+        "tags": "performance"
+      },
+      {
+        "name": "TC-003 - GitHub social link is correct -- @1.2 ",
+        "status": "passed",
+        "duration_ms": 1090,
+        "tags": "sanity"
+      },
+      {
+        "name": "TC-019 - Portfolio items have thumbnail images",
+        "status": "passed",
+        "duration_ms": 1393,
+        "tags": "regression"
+      },
+      {
+        "name": "TC-013 - Resume download link is present",
+        "status": "passed",
+        "duration_ms": 1136,
+        "tags": "ui"
+      },
+      {
+        "name": "TC-012 - Portfolio item \"BlackJack Game App\" links to GitHub -- @1.4 ",
+        "status": "passed",
+        "duration_ms": 1329,
+        "tags": "regression"
+      },
+      {
+        "name": "TC-002 - Navigation to Resume works -- @1.3 ",
+        "status": "passed",
+        "duration_ms": 1164,
+        "tags": "sanity"
+      }
+    ],
+    "timestamp": "2026-05-07T05:36:23.495352+00:00",
+    "run_id": "20260507_053623",
+    "tags_filter": "regression-firefox"
+  },
+  {
+    "total": 42,
+    "passed": 42,
+    "failed": 0,
+    "broken": 0,
+    "skipped": 0,
+    "pass_rate": 100.0,
+    "duration_s": 71.3,
+    "scenarios": [
+      {
+        "name": "TC-002 - Navigation to About Me works -- @1.1 ",
+        "status": "passed",
+        "duration_ms": 1714,
+        "tags": "sanity"
+      },
+      {
+        "name": "TC-006 - Contact form fields are present",
+        "status": "passed",
+        "duration_ms": 1671,
+        "tags": "smoke"
+      },
+      {
+        "name": "TC-002 - Navigation to Portfolio works -- @1.2 ",
+        "status": "passed",
+        "duration_ms": 1680,
+        "tags": "sanity"
+      },
+      {
+        "name": "TC-003 - GitHub social link is correct -- @1.2 ",
+        "status": "passed",
+        "duration_ms": 1616,
+        "tags": "sanity"
+      },
+      {
+        "name": "TC-A01 - All images have alt text",
+        "status": "passed",
+        "duration_ms": 1895,
+        "tags": "accessibility"
+      },
+      {
+        "name": "TC-003 - LinkedIn social link is correct -- @1.3 ",
+        "status": "passed",
+        "duration_ms": 1651,
+        "tags": "sanity"
+      },
+      {
+        "name": "TC-013 - Resume download link is present",
+        "status": "passed",
+        "duration_ms": 1635,
+        "tags": "ui"
+      },
+      {
+        "name": "TC-014 - Footer displays copyright",
+        "status": "passed",
+        "duration_ms": 1633,
+        "tags": "ui"
+      },
+      {
+        "name": "TC-020 - Navigation scrolls section into viewport",
+        "status": "passed",
+        "duration_ms": 1655,
+        "tags": "ui"
+      },
+      {
+        "name": "TC-A05 - Color contrast and text readability",
+        "status": "passed",
+        "duration_ms": 1580,
+        "tags": "accessibility"
+      },
+      {
+        "name": "TC-012 - Portfolio item \"Cryoto Currency Platform\" links to GitHub -- @1.5 ",
+        "status": "passed",
+        "duration_ms": 1665,
+        "tags": "regression"
+      },
+      {
+        "name": "TC-017 - Page meta tags are present",
+        "status": "passed",
+        "duration_ms": 1586,
+        "tags": "seo"
+      },
+      {
+        "name": "TC-004 - Key content is present in Resume section",
+        "status": "passed",
+        "duration_ms": 1617,
+        "tags": "ui"
+      },
+      {
+        "name": "TC-002 - Navigation to Resume works -- @1.3 ",
+        "status": "passed",
+        "duration_ms": 1681,
+        "tags": "sanity"
+      },
+      {
+        "name": "TC-018 - Email field rejects invalid format",
+        "status": "passed",
+        "duration_ms": 1994,
+        "tags": "validation"
+      },
+      {
+        "name": "TC-003 - Twitter social link is correct -- @1.1 ",
+        "status": "passed",
+        "duration_ms": 1591,
+        "tags": "sanity"
+      },
+      {
+        "name": "TC-012 - Portfolio item \"Process Scheduler Simulator\" links to GitHub -- @1.2 ",
+        "status": "passed",
+        "duration_ms": 1612,
+        "tags": "regression"
+      },
+      {
+        "name": "TC-015 - GitHub links to the correct profile -- @1.2 ",
+        "status": "passed",
+        "duration_ms": 1576,
+        "tags": "regression"
+      },
+      {
+        "name": "TC-005 - Hero section CTA works",
+        "status": "passed",
+        "duration_ms": 1625,
+        "tags": "ui"
+      },
+      {
+        "name": "TC-P02 - No broken images on the page",
+        "status": "passed",
+        "duration_ms": 1580,
+        "tags": "performance"
+      },
+      {
+        "name": "TC-A02 - Heading hierarchy is correct",
+        "status": "passed",
+        "duration_ms": 1678,
+        "tags": "accessibility"
+      },
+      {
+        "name": "TC-012 - Portfolio item \"Ticket Managment Browser Extension\" links to GitHub -- @1.6 ",
+        "status": "passed",
+        "duration_ms": 1630,
+        "tags": "regression"
+      },
+      {
+        "name": "TC-A04 - Interactive elements are keyboard accessible",
+        "status": "passed",
+        "duration_ms": 1597,
+        "tags": "accessibility"
+      },
+      {
+        "name": "TC-019 - Portfolio items have thumbnail images",
+        "status": "passed",
+        "duration_ms": 1691,
+        "tags": "regression"
+      },
+      {
+        "name": "TC-P01 - Page loads within acceptable time",
+        "status": "passed",
+        "duration_ms": 1576,
+        "tags": "performance"
+      },
+      {
+        "name": "TC-007 - User can fill out the contact form",
+        "status": "passed",
+        "duration_ms": 1755,
+        "tags": "regression"
+      },
+      {
+        "name": "TC-012 - Portfolio item \"Twitter Bot\" links to GitHub -- @1.1 ",
+        "status": "passed",
+        "duration_ms": 1650,
+        "tags": "regression"
+      },
+      {
+        "name": "TC-P03 - Page size is reasonable",
+        "status": "passed",
+        "duration_ms": 1587,
+        "tags": "performance"
+      },
+      {
+        "name": "TC-011 - All portfolio items are displayed",
+        "status": "passed",
+        "duration_ms": 1720,
+        "tags": "regression"
+      },
+      {
+        "name": "TC-022 - Resume PDF iframe has valid source",
+        "status": "passed",
+        "duration_ms": 1672,
+        "tags": "ui"
+      },
+      {
+        "name": "TC-001 - Page Title verification",
+        "status": "passed",
+        "duration_ms": 1593,
+        "tags": "smoke"
+      },
+      {
+        "name": "TC-021 - Email mailto link is present in sidebar",
+        "status": "passed",
+        "duration_ms": 1615,
+        "tags": "regression"
+      },
+      {
+        "name": "TC-A03 - Page has a lang attribute",
+        "status": "passed",
+        "duration_ms": 1606,
+        "tags": "accessibility"
+      },
+      {
+        "name": "TC-015 - Twitter links to the correct profile -- @1.1 ",
+        "status": "passed",
+        "duration_ms": 1618,
+        "tags": "regression"
+      },
+      {
+        "name": "TC-002 - Navigation to Get in Touch works -- @1.4 ",
+        "status": "passed",
+        "duration_ms": 1671,
+        "tags": "sanity"
+      },
+      {
+        "name": "TC-008 - Required fields enforce validation",
+        "status": "passed",
+        "duration_ms": 1959,
+        "tags": "validation"
+      },
+      {
+        "name": "TC-016 - Mobile layout hides sidebar and shows content",
+        "status": "passed",
+        "duration_ms": 3168,
+        "tags": "responsive"
+      },
+      {
+        "name": "TC-012 - Portfolio item \"BlackJack Game App\" links to GitHub -- @1.4 ",
+        "status": "passed",
+        "duration_ms": 1679,
+        "tags": "regression"
+      },
+      {
+        "name": "TC-009 - Hero section content is displayed",
+        "status": "passed",
+        "duration_ms": 1676,
+        "tags": "ui"
+      },
+      {
+        "name": "TC-010 - About Me section has key content",
+        "status": "passed",
+        "duration_ms": 1681,
+        "tags": "regression"
+      },
+      {
+        "name": "TC-015 - LinkedIn links to the correct profile -- @1.3 ",
+        "status": "passed",
+        "duration_ms": 1593,
+        "tags": "regression"
+      },
+      {
+        "name": "TC-012 - Portfolio item \"Grocery Delivery Web App\" links to GitHub -- @1.3 ",
+        "status": "passed",
+        "duration_ms": 1642,
+        "tags": "regression"
+      }
+    ],
+    "timestamp": "2026-05-07T05:36:23.596760+00:00",
+    "run_id": "20260507_053623",
+    "tags_filter": "regression-webkit"
   }
 ]
